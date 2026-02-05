@@ -3,7 +3,7 @@ from tkinter import ttk
 
 root = tk.Tk()
 root.title("Tic Tac Toe")
-#root.resizable(False, False)
+root.resizable(False, False)
 
 main_frame = ttk.Frame()
 main_frame.pack()
