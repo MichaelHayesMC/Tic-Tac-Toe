@@ -1,46 +1,108 @@
 import tkinter as tk
 from tkinter import ttk
 
-def button_func(button_id):
-    print(f"pressed button-{button_id}")
+crosses = True
+record_list = {}
+x_list = []
+o_list = []
 
-def button_grid(parent_frame):
-    button_count = 1
-    game_row = 0
-    game_column = 0
-    game_list = [
-        0, 1, 2,
-        3, 4, 5,
-        6, 7, 8
-    ]
-    
-    while button_count != 10:
-        if button_count <= 3:
+class button_class:
+    def __init__(self, id):
+        self.id = id
+
+    # Fix this with range() for loops
+    def grid_allocation(self):
+        game_row = 0
+        game_column = 0
+
+        if self.id <= 3:
             game_row = 0
-        elif button_count <= 6:
+        elif self.id <= 6:
             game_row = 1
         else:
             game_row = 2
 
-        if button_count == 4:
+        if self.id == 4:
             game_column = 0
-        elif button_count == 5:
+        elif self.id == 5:
             game_column = 1
-        elif button_count % 3 == 0:
+        elif self.id % 3 == 0:
             game_column = 2
-        elif button_count % 2 == 0:
+        elif self.id % 2 == 0:
             game_column = 1
         else:
             game_column = 0
         
-        button = ttk.Button(parent_frame, text=f"#{button_count}, R{game_row}, C{game_column}", command=lambda:button_func(button_count))
-        button.grid(row=game_row, column=game_column)
-        game_list.append(f"#{button_count}, R{game_row}, C{game_column}")
-        
-        button_count += 1
+        self.button.grid(row=game_row, column=game_column)
 
-    print(game_list)
-    return button
+    def button_func(self):
+        global crosses
+        if crosses == True:
+            self.button.config(text="x", state=tk.DISABLED)
+            crosses = False
+        elif crosses == False:
+            self.button.config(text="o", state=tk.DISABLED)
+            crosses = True
+
+        self.win_cond()
+
+    def win_cond(self):
+        global x_list
+        global o_list
+
+        win_list = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 6, 9],
+            [1, 5, 9],
+            [3, 5, 7]
+        ]
+
+        # Convert the following if statements dependent on button type to a function
+        if self.button.cget("text") == "x":
+            x_list.append(self.id)
+            x_list.sort()
+            
+
+            for win_scenario in win_list:
+                if len(set(x_list).intersection(set(win_scenario))) == 3:
+                    print("x wins")
+                
+        if self.button.cget("text") == "o":
+            o_list.append(self.id)
+            o_list.sort()
+
+            for win_scenario in win_list:
+                if len(set(o_list).intersection(set(win_scenario))) == 3:
+                    print("o wins")
+
+                #print(set(x_list))
+                #print(set(win_scenario))    
+                #print(set(x_list).intersection(set(win_scenario)))
+
+
+    def identfication(self):
+        self.button = ttk.Button(game_frame, text=self.id, command=self.button_func)
+        self.grid_allocation()
+
+def button_grid(parent_frame):
+    # Probably will replace with a for range() loop
+    game_list = [
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9
+    ]
+
+    for id in game_list:
+        global record_list
+        key_name = f"button_id_{id}"
+        value = id
+        record_list[key_name] = value
+        button = button_class(id)
+        button.identfication()
 
 root = tk.Tk()
 root.title("Tic Tac Toe")
