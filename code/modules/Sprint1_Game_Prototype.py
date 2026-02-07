@@ -66,10 +66,10 @@ class button_class:
             x_list.append(self.id)
             x_list.sort()
             
-
             for win_scenario in win_list:
                 if len(set(x_list).intersection(set(win_scenario))) == 3:
                     print("x wins")
+                    score_add("cross")
                 
         if self.button.cget("text") == "o":
             o_list.append(self.id)
@@ -78,25 +78,14 @@ class button_class:
             for win_scenario in win_list:
                 if len(set(o_list).intersection(set(win_scenario))) == 3:
                     print("o wins")
-
-                #print(set(x_list))
-                #print(set(win_scenario))    
-                #print(set(x_list).intersection(set(win_scenario)))
-
+                    score_add("circles")
 
     def identfication(self):
         self.button = ttk.Button(game_frame, text=self.id, command=self.button_func)
         self.grid_allocation()
 
 def button_grid(parent_frame):
-    # Probably will replace with a for range() loop
-    game_list = [
-        1, 2, 3,
-        4, 5, 6,
-        7, 8, 9
-    ]
-
-    for id in game_list:
+    for id in range(1, 10):
         global record_list
         key_name = f"button_id_{id}"
         value = id
@@ -109,17 +98,48 @@ root.title("Tic Tac Toe")
 #root.resizable(False, False)
 root.geometry("400x400")
 
+# Int Variables that automatically change the looks of the GUI when changed
+cross_score_label = tk.StringVar(value = "Crosses: ")
+cross_score = tk.IntVar(value = 0)
+cross_combined = tk.StringVar()
+
+tie_score_label = tk.StringVar(value = "Tie: ")
+tie_score = tk.IntVar(value = 0)
+tie_combined = tk.StringVar()
+
+circles_score_label = tk.StringVar(value = "Circles: ")
+circles_score = tk.IntVar(value = 0)
+circles_combined = tk.StringVar()
+
 main_frame = ttk.Frame(root)
 main_frame.pack()
 
-cross_score = ttk.Label(main_frame, text="Crosses: ")
-cross_score.grid(row=0, column=0)
+def score_update():
+    cross_combined.set(f"{cross_score_label.get()}{cross_score.get()}")
+    tie_combined.set(f"{tie_score_label.get()}{tie_score.get()}")
+    circles_combined.set(f"{circles_score_label.get()}{circles_score.get()}")
 
-tie_score = ttk.Label(main_frame, text="Tie: ")
-tie_score.grid(row=0, column=1)
+score_update()
 
-circles_score = ttk.Label(main_frame, text="Circles: ")
-circles_score.grid(row=0, column=2)
+def score_add(label_type):
+    if label_type == "cross":
+        cross_score.set(cross_score.get() + 1)
+    elif label_type == "tie":
+        tie_score.set(tie_score.get() + 1)
+    elif label_type == "circles":
+        circles_score.set(circles_score.get() + 1)
+
+    score_update()
+
+# Need .get() for score to get the value rather than the label widget data itself
+cross_score_board = ttk.Label(main_frame, textvariable=cross_combined)
+cross_score_board.grid(row=0, column=0)
+
+tie_score_board = ttk.Label(main_frame, textvariable=tie_combined)
+tie_score_board.grid(row=0, column=1)
+
+circles_score_board = ttk.Label(main_frame, textvariable=circles_combined)
+circles_score_board.grid(row=0, column=2)
 
 game_frame = ttk.Frame(main_frame)
 game_frame.grid(row=1, column=0, columnspan=3)
@@ -128,5 +148,7 @@ create_buttons = button_grid(game_frame)
 
 restart_button = ttk.Button(main_frame, text="Restart")
 restart_button.grid(row=2, column=0, columnspan=3)
+
+
 
 root.mainloop()
