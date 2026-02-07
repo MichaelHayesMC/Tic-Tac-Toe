@@ -1,10 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
 
-crosses = True
-record_list = {}
-x_list = []
-o_list = []
+def game_set():
+    global crosses
+    global record_list
+    global x_list
+    global o_list
+    crosses = True
+    record_list = {}
+    x_list = []
+    o_list = []
 
 class button_class:
     def __init__(self, id):
@@ -71,7 +76,7 @@ class button_class:
                     print("x wins")
                     score_add("cross")
                 
-        if self.button.cget("text") == "o":
+        elif self.button.cget("text") == "o":
             o_list.append(self.id)
             o_list.sort()
 
@@ -85,8 +90,9 @@ class button_class:
         self.grid_allocation()
 
 def button_grid(parent_frame):
+    global record_list
+    record_list = {}
     for id in range(1, 10):
-        global record_list
         key_name = f"button_id_{id}"
         value = id
         record_list[key_name] = value
@@ -97,6 +103,13 @@ root = tk.Tk()
 root.title("Tic Tac Toe")
 #root.resizable(False, False)
 root.geometry("400x400")
+
+def game_start():
+    # Looks for every game_frame child then deletes them to therefore be replaced
+    for button in game_frame.winfo_children():
+        button.destroy()
+    game_set()
+    button_grid(game_frame)
 
 # Int Variables that automatically change the looks of the GUI when changed
 cross_score_label = tk.StringVar(value = "Crosses: ")
@@ -128,7 +141,8 @@ def score_add(label_type):
         tie_score.set(tie_score.get() + 1)
     elif label_type == "circles":
         circles_score.set(circles_score.get() + 1)
-
+    
+    game_start()
     score_update()
 
 # Need .get() for score to get the value rather than the label widget data itself
@@ -146,9 +160,9 @@ game_frame.grid(row=1, column=0, columnspan=3)
 
 create_buttons = button_grid(game_frame)
 
-restart_button = ttk.Button(main_frame, text="Restart")
+restart_button = ttk.Button(main_frame, text="Restart", command=game_start)
 restart_button.grid(row=2, column=0, columnspan=3)
 
-
+game_set()
 
 root.mainloop()
