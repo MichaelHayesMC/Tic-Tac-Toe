@@ -6,6 +6,8 @@ def game_set():
     global record_list
     global x_list
     global o_list
+    global disable_count
+    disable_count = 0
     crosses = True
     record_list = {}
     x_list = []
@@ -42,12 +44,20 @@ class button_class:
 
     def button_func(self):
         global crosses
+        global disable_count
+
         if crosses == True:
             self.button.config(text="x", state=tk.DISABLED)
             crosses = False
         elif crosses == False:
             self.button.config(text="o", state=tk.DISABLED)
             crosses = True
+
+        disable_count += 1
+
+        if disable_count == 9:
+            score_add("tie")
+            game_start()
 
         self.win_cond()
 
@@ -67,26 +77,27 @@ class button_class:
         ]
 
         # Convert the following if statements dependent on button type to a function
-        if self.button.cget("text") == "x":
-            x_list.append(self.id)
-            x_list.sort()
-            
-            for win_scenario in win_list:
-                if len(set(x_list).intersection(set(win_scenario))) == 3:
-                    print("x wins")
-                    score_add("cross")
+        if self.button.winfo_exists():
+            if self.button.cget("text") == "x":
+                x_list.append(self.id)
+                x_list.sort()
                 
-        elif self.button.cget("text") == "o":
-            o_list.append(self.id)
-            o_list.sort()
+                for win_scenario in win_list:
+                    if len(set(x_list).intersection(set(win_scenario))) == 3:
+                        print("x wins")
+                        score_add("cross")
+                    
+            elif self.button.cget("text") == "o":
+                o_list.append(self.id)
+                o_list.sort()
 
-            for win_scenario in win_list:
-                if len(set(o_list).intersection(set(win_scenario))) == 3:
-                    print("o wins")
-                    score_add("circles")
+                for win_scenario in win_list:
+                    if len(set(o_list).intersection(set(win_scenario))) == 3:
+                        print("o wins")
+                        score_add("circles")
 
     def identfication(self):
-        self.button = ttk.Button(game_frame, text=self.id, command=self.button_func)
+        self.button = ttk.Button(game_frame, text="⬜", command=self.button_func)
         self.grid_allocation()
 
 def button_grid(parent_frame):
@@ -108,6 +119,7 @@ def game_start():
     # Looks for every game_frame child then deletes them to therefore be replaced
     for button in game_frame.winfo_children():
         button.destroy()
+
     game_set()
     button_grid(game_frame)
 
