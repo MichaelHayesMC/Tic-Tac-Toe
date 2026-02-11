@@ -9,9 +9,16 @@ As presented above I have been able to fulfil the goals that I had set for mysel
 
 ## Flowcharts
 ### Prototype Wireframe Flowchart -> Sprint 1 Programme Flowchart
+
 <img src="../planning\Design_Prototypes_Drawio\Final_Design\Flowchart\Final_Design_Prototype_Flowchart.png" alt="Flowchart of first prototype" width="650"/>
 
 For my first design after the finalisation of stakeholder feedback, I was able to create a visual flowchart describing the process of functions for my tkinter project being the ideology of the finished digital outcomes' intended purpose. As explained by the algorithm for my pseudocode my outcome will generate the 3x3 game necessary for basic gameplay and basic score indicators for score tracking and replayability allowing for repetitive fun amongst friends and peers. The colour therefore separates the different modules of code describing their intended purpose by the title they fall under.
+
+### Sprint 2 Programme Flowchart
+
+<img src="image directory" width="650"/>
+
+Text
 
 ## Test Cases
 
