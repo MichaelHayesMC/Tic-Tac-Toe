@@ -26,7 +26,7 @@ My first stakeholder had requested for my next interaction to incorporate a quot
 
 * __Request(s)__
 
-For my second stakeholder, they have requested that I incorporate a unique function being the player vs ai. Since they request for more diversity and single player availability allowing those that want to verse a seperate opposition rather than having to gain their friends just to play a game. Furthermore I decide that I will incorporate this stakeholder request since it follows the intent to allow fluent player usability for my robust programme. 
+For my second stakeholder, they have requested that I incorporate a unique function being the player vs ai. Since they request for more diversity and single player availability allowing those that want to verse a separate opposition rather than having to gain their friends just to play a game. Furthermore I decide that I will incorporate this stakeholder request since it follows the intent to allow fluent player usability for my robust programme. 
 
 * __Integration__
 
@@ -38,7 +38,7 @@ For my second stakeholder, they have requested that I incorporate a unique funct
 
 * __Request(s)__
 
-For my third stakeholder they have requested in terms of my digital outcome that I should also take into regards of my design choices. In particular they would like it if I resized the 3x3 game widgets to make it mose consistent with the conventional design. Therefore I intend to comply with this request since being conventional to the stakeholder's ideals of what they expect of the digital outcome will further convey that this programme is a representation of the iconic tic tac toe game.
+For my third stakeholder they have requested in terms of my digital outcome that I should also take into regards of my design choices. In particular they would like it if I resized the 3x3 game widgets to make it more consistent with the conventional design. Therefore I intend to comply with this request since being conventional to the stakeholder's ideals of what they expect of the digital outcome will further convey that this programme is a representation of the iconic tic tac toe game.
 
 * __Integration__
 
