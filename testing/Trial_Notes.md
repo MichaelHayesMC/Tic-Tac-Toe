@@ -8,27 +8,25 @@ __Sprint One Design__
 __Sprint Two Design__  
 <img src="../assets\markdown-images\Trial_Notes_Images\Sprint_Outcomes\Sprint_2_Outcome.png" alt="Sprint 2 Outcome" width="650"/>
 
-Over the course of my trialling with my stakeholders for my sprint one design, I have gotten mostly constructive criticism which allowed me to make slight improvements from the initial prototype design. This information is gathered via a forum prompting questions for my stakeholders. This will therefore give me the feedback I need to improve my design to fit the needs of my audience.
+Over the course of my trialling with my stakeholders for my sprint one design, I have gotten mostly constructive criticism which allowed me to make slight improvements from the initial prototype design. This information is gathered via a forum prompting questions for my stakeholders. This will therefore give me the feedback I need to improve my design to fit the needs of my audience fulfilling my intended purpose of making a satisfactory interface.
 
 ### 1️⃣ Stakeholder One (Opeloge)
 
 * __Request(s)__
 
-My first stakeholder had requested for my next interaction to incorporate a priority and due date selection system. In response to this I have already planned to do this for my next sprint thus fulfilling the requirements of my stakeholder for them to trial my next iteration of this program.
-
-He had also requested that I modify the random spacing between certain widgets like the buttons in the frame to have less random space between them and the frame. I intend to fix this problem by adding more widgets that I have planned to add to fill up this empty space.
+My first stakeholder had requested for my next interaction to incorporate a quote on quote "better Aesthetics". I have to assume from this lacklustre amount of feedback that the stakeholder is requesting that I make the tkinter GUI more exciting through the use of: dynamic colours, visual indicators(winning and lose conditions), symmetrical 3x3 box based game grid. Furthermore I plan to integrate this request since I find it plausible for my digital outcome's intended purpose and appeal
 
 * __Integration__
 
 <img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_2\Sprint2_Integration_Nathan.png" alt="Integration - Stakeholder one" width="650"/>
 
->Throughout the process of my sprint two, I have successfully met the requirements of my first stakeholder. I have provided the integration of the status and priority combo boxes that allow the user to customize their tasks according to what they are doing for the task and how important it is to them. I have also filled up the empty space with the other widgets that I had intended initially. I have added, due date and modified task capabilities for the user to add specifications to each task in the task manager.
+>Throughout the process of my sprint two, I have successfully met the requirements of my first stakeholder. I have provided the integration of the status and priority combo boxes that allow the user to customise their tasks according to what they are doing for the task and how important it is to them. I have also filled up the empty space with the other widgets that I had intended initially. I have added, due date and modified task capabilities for the user to add specifications to each task in the task manager.
 
 ### 2️⃣ Stakeholder Two (Astyn)
 
 * __Request(s)__
 
-My second stakeholder had requested that I incorporate a logo for my next design. I have decided to dismiss this request for I am already planning to do such an improvement in the following sprint 3. This is because I have organised all the style based and theme based tasks that must be done around the last sprint due to it being the final touches of the application.
+My second stakeholder had requested that I incorporate a logo for my next design. I have decided to dismiss this request for I am already planning to do such an improvement in the following sprint 3. This is because I have organised all the style based and theme based tasks that must be done around the last sprint due to it being the final touches of the application. 
 
 * __Integration__
 
