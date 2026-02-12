@@ -186,27 +186,26 @@ score_update()
 game_set()
 
 
-own_frame = tk.Frame(background="blue")
+own_frame = tk.Frame(highlightbackground="#B85450", highlightthickness=1)
 own_frame.pack()
 
 style = ttk.Style()
-style2 = ttk.Style()
 
-style2.theme_use("clam")
+style.theme_use("clam")
 #style2.map('Custom.TButton', background=[("active", "red")])
 
 
 yippe = [-159, -10, -160, -2]
 
-style2.configure('Custom.TButton',
+style.configure('Crosses.TButton',
                 foreground='Black',
                 background="#F8CECC",
                 font=('Segoe UI Symbol', 50),
                 padding=yippe,
-                bg=0,
                 relief="flat")
 
-button = ttk.Button(own_frame, text="✕", style="Custom.TButton")
+
+button = ttk.Button(own_frame, text="✕", style="Crosses.TButton")
 button.grid(row=0,column=0)
 
 #button2 = tk.Button(own_frame, 
