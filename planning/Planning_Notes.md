@@ -4,9 +4,9 @@
 
 ### Structure
 
-For this tkinter programme I intend to make three applications to brainstorm ideas on what my potentional digital outcome may look like and function for the intended end-user.
+For this tkinter programme I intend to make three applications to brainstorm ideas on what my potential digital outcome may look like and function for the intended end-user.
 
-The aim of these designs must follow under the criteria of having the generic tic tac toe game loop as well the ability to keep track of winning and losing conditions through score labels, popups etc.
+The aim of these designs must follow under the criteria of having the generic tic tac toe game loop as well the ability to keep track of winning and losing conditions through score labels, pop-ups etc.
 
 #### 1️⃣ Concept One
 
@@ -30,7 +30,7 @@ In my third design I decided to add a restart button alongside rearranged win co
 
 <img src="../planning/Design_Prototypes_Drawio/Final_Design/Wireframe/Design_Prototype_3_Blueprint.png" alt="Integration - Design Concept One" width="650"/>
 
-For my final design, I decided to use stakeholder feedback to further inhance the playability of my programme and making it tailored for the specific needs of my targeted auidience.
+For my final design, I decided to use stakeholder feedback to further enhance the playability of my programme and making it tailored for the specific needs of my targeted audience.
 
 * 1️⃣ Stakeholder One (Opeloge)
 
@@ -46,4 +46,4 @@ Stakeholder three requested that in my second design to make the widgets smaller
 
 ## ⚙️ Functionality
 
-In terms of functionality, my game programme for this current prototype is intneded to allow players to try to achieve a 3 in a row line with the respective crosses or circles to therefore record those scores in the titles above.
+In terms of functionality, my game programme for this current prototype is intended to allow players to try to achieve a 3 in a row line with the respective crosses or circles to therefore record those scores in the titles above.
