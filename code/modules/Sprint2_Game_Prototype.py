@@ -192,10 +192,19 @@ own_frame.pack()
 style = ttk.Style()
 style2 = ttk.Style()
 
+style2.theme_use("clam")
+#style2.map('Custom.TButton', background=[("active", "red")])
+
+
+yippe = [-159, -10, -160, -2]
+
 style2.configure('Custom.TButton',
                 foreground='Black',
+                background="#F8CECC",
                 font=('Segoe UI Symbol', 50),
-                padding=[-145, 8, -146, 12])
+                padding=yippe,
+                bg=0,
+                relief="flat")
 
 button = ttk.Button(own_frame, text="✕", style="Custom.TButton")
 button.grid(row=0,column=0)
