@@ -185,6 +185,7 @@ restart_button.grid(row=2, column=0, columnspan=3)
 score_update()
 game_set()
 
+
 own_frame = tk.Frame(background="blue")
 own_frame.pack()
 
@@ -220,6 +221,7 @@ button.grid(row=0,column=0)
 #button2.grid(row=0,column=1, padx=2.5,pady=5)
 #button3.grid(row=0, column=2, padx=2.5,pady=5)
 #button3.config(relief='flat')
+
 
 # Creates loop for tkinter interface
 root.mainloop()
