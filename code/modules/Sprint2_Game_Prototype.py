@@ -101,7 +101,7 @@ class button_class:
                         score_add("circles")
 
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
-    def identfication(self):
+    def identification(self):
         self.button = ttk.Button(game_frame, text="⬜", command=self.button_func)
         self.grid_allocation()
 
@@ -114,7 +114,7 @@ def button_grid(parent_frame):
         value = id
         record_list[key_name] = value
         button = button_class(id)
-        button.identfication()
+        button.identification()
 
 # All tkinter widgets instantiated
 root = tk.Tk()
@@ -184,6 +184,42 @@ restart_button.grid(row=2, column=0, columnspan=3)
 
 score_update()
 game_set()
+
+own_frame = tk.Frame(background="blue")
+own_frame.pack()
+
+style = ttk.Style()
+style2 = ttk.Style()
+
+style2.configure('Custom.TButton',
+                foreground='Black',
+                font=('Segoe UI Symbol', 50),
+                padding=[-145, 8, -146, 12])
+
+button = ttk.Button(own_frame, text="✕", style="Custom.TButton")
+button.grid(row=0,column=0)
+
+#button2 = tk.Button(own_frame, 
+                    #text="✕", 
+                    #bg='#F8CECC',
+                    #relief='flat',
+                    #height=-5, 
+                    #width=4, 
+                    #font=('Segoe UI Symbol', 50),
+                    #bd=0)
+
+#button3 = tk.Button(root, 
+                    #text="◯", 
+                    #bg='#F8CECC',
+                    #relief='flat',
+                    #height=-500000, 
+                    #width=4, 
+                    #font=('Segoe UI Symbol', 50),
+                    #bd=0,)
+
+#button2.grid(row=0,column=1, padx=2.5,pady=5)
+#button3.grid(row=0, column=2, padx=2.5,pady=5)
+#button3.config(relief='flat')
 
 # Creates loop for tkinter interface
 root.mainloop()
