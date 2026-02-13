@@ -43,7 +43,7 @@ class button_class:
         else:
             game_column = 0
         
-        self.button.grid(row=game_row, column=game_column)
+        self.button.grid(row=game_row, column=game_column, padx=3, pady=3)
 
     # Changes the label text of the selected buttons depending on current playing character 'x' or 'o'
     def button_func(self):
@@ -51,7 +51,7 @@ class button_class:
         global disable_count
 
         if crosses == True:
-            self.button.config(text="x", state=tk.DISABLED)
+            self.button.config(text="✕", state=tk.DISABLED)
             crosses = False
         elif crosses == False:
             self.button.config(text="o", state=tk.DISABLED)
@@ -84,7 +84,7 @@ class button_class:
 
         # Convert the following if statements dependent on button type to a function
         if self.button.winfo_exists():
-            if self.button.cget("text") == "x":
+            if self.button.cget("text") == "✕":
                 x_list.append(self.id)
                 x_list.sort()
                 
@@ -102,7 +102,7 @@ class button_class:
 
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
     def identification(self):
-        self.button = ttk.Button(game_frame, text="⬜", command=self.button_func)
+        self.button = ttk.Button(game_frame, command=self.button_func, style="Idle.TButton")
         self.grid_allocation()
 
 # Creates 9 buttons for the 3x3 grid
@@ -175,7 +175,7 @@ circles_score_board = ttk.Label(main_frame, textvariable=circles_combined)
 circles_score_board.grid(row=0, column=2)
 
 game_frame = ttk.Frame(main_frame)
-game_frame.grid(row=1, column=0, columnspan=3)
+game_frame.grid(row=1, column=0, columnspan=3, padx=3, pady=4)
 
 create_buttons = button_grid(game_frame)
 
@@ -194,7 +194,6 @@ style = ttk.Style()
 style.theme_use("clam")
 #style2.map('Custom.TButton', background=[("active", "red")])
 
-
 yippe = [-159, -10, -160, -2]
 
 style.configure('Crosses.TButton',
@@ -204,6 +203,14 @@ style.configure('Crosses.TButton',
                 padding=yippe,
                 relief="flat")
 
+style.configure('Idle.TButton',
+                foreground='Black',
+                background="#f8f5f9",
+                font=('Segoe UI Symbol', 50),
+                padding=yippe,
+                relief="flat")
+
+style.configure('Label.TButton')
 
 button = ttk.Button(own_frame, text="✕", style="Crosses.TButton")
 button.grid(row=0,column=0)
