@@ -54,7 +54,7 @@ class button_class:
             self.button.config(text="✕", state=tk.DISABLED)
             crosses = False
         elif crosses == False:
-            self.button.config(text="o", state=tk.DISABLED)
+            self.button.config(text="⭘", state=tk.DISABLED)
             crosses = True
 
         disable_count += 1
@@ -85,6 +85,7 @@ class button_class:
         # Convert the following if statements dependent on button type to a function
         if self.button.winfo_exists():
             if self.button.cget("text") == "✕":
+                self.button.configure(style="Crosses.TButton")
                 x_list.append(self.id)
                 x_list.sort()
                 
@@ -92,7 +93,8 @@ class button_class:
                     if len(set(x_list).intersection(set(win_scenario))) == 3:
                         score_add("cross")
                     
-            elif self.button.cget("text") == "o":
+            elif self.button.cget("text") == "⭘":
+                self.button.configure(style="Circles.TButton")
                 o_list.append(self.id)
                 o_list.sort()
 
@@ -161,7 +163,7 @@ circles_score_label = tk.StringVar(value = "Circles: ")
 circles_score = tk.IntVar(value = 0)
 circles_combined = tk.StringVar()
 
-main_frame = ttk.Frame(root)
+main_frame = tk.Frame(root, background="#E1D5E7")
 main_frame.pack()
 
 # Need .get() for score to get the value rather than the label widget data itself
@@ -174,8 +176,8 @@ tie_score_board.grid(row=0, column=1)
 circles_score_board = ttk.Label(main_frame, textvariable=circles_combined)
 circles_score_board.grid(row=0, column=2)
 
-game_frame = ttk.Frame(main_frame)
-game_frame.grid(row=1, column=0, columnspan=3, padx=3, pady=4)
+game_frame = tk.Frame(main_frame, background="#f0eaf3", padx=5, pady=5)
+game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=6)
 
 create_buttons = button_grid(game_frame)
 
@@ -198,10 +200,20 @@ yippe = [-159, -10, -160, -2]
 
 style.configure('Crosses.TButton',
                 foreground='Black',
+                font=('Segoe UI Symbol', 50),
+                padding=yippe,
                 background="#F8CECC",
+                relief="flat")
+
+style.map("Crosses.TButton", background=[("disabled", "#F8CECC")])
+
+style.configure('Circles.TButton',
+                foreground='Black',
                 font=('Segoe UI Symbol', 50),
                 padding=yippe,
                 relief="flat")
+
+style.map("Circles.TButton", background=[("disabled", "#DAE8FC")])
 
 style.configure('Idle.TButton',
                 foreground='Black',
@@ -209,34 +221,6 @@ style.configure('Idle.TButton',
                 font=('Segoe UI Symbol', 50),
                 padding=yippe,
                 relief="flat")
-
-style.configure('Label.TButton')
-
-button = ttk.Button(own_frame, text="✕", style="Crosses.TButton")
-button.grid(row=0,column=0)
-
-#button2 = tk.Button(own_frame, 
-                    #text="✕", 
-                    #bg='#F8CECC',
-                    #relief='flat',
-                    #height=-5, 
-                    #width=4, 
-                    #font=('Segoe UI Symbol', 50),
-                    #bd=0)
-
-#button3 = tk.Button(root, 
-                    #text="◯", 
-                    #bg='#F8CECC',
-                    #relief='flat',
-                    #height=-500000, 
-                    #width=4, 
-                    #font=('Segoe UI Symbol', 50),
-                    #bd=0,)
-
-#button2.grid(row=0,column=1, padx=2.5,pady=5)
-#button3.grid(row=0, column=2, padx=2.5,pady=5)
-#button3.config(relief='flat')
-
 
 # Creates loop for tkinter interface
 root.mainloop()
