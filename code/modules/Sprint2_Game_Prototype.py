@@ -163,25 +163,25 @@ circles_score_label = tk.StringVar(value = "Circles: ")
 circles_score = tk.IntVar(value = 0)
 circles_combined = tk.StringVar()
 
-main_frame = tk.Frame(root, background="#E1D5E7")
+main_frame = tk.Frame(root, background="#E1D5E7", pady=10)
 main_frame.pack()
 
 # Need .get() for score to get the value rather than the label widget data itself
-cross_score_board = ttk.Label(main_frame, textvariable=cross_combined)
+cross_score_board = ttk.Label(main_frame, textvariable=cross_combined, style="Cross_Score.TLabel", padding=11)
 cross_score_board.grid(row=0, column=0)
 
-tie_score_board = ttk.Label(main_frame, textvariable=tie_combined)
+tie_score_board = ttk.Label(main_frame, textvariable=tie_combined, style="Tie_Score.TLabel", padding=11)
 tie_score_board.grid(row=0, column=1)
 
-circles_score_board = ttk.Label(main_frame, textvariable=circles_combined)
+circles_score_board = ttk.Label(main_frame, textvariable=circles_combined, style="Circles_Score.TLabel", padding=11)
 circles_score_board.grid(row=0, column=2)
 
 game_frame = tk.Frame(main_frame, background="#f0eaf3", padx=5, pady=5)
-game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=6)
+game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=10)
 
 create_buttons = button_grid(game_frame)
 
-restart_button = ttk.Button(main_frame, text="Restart", command=game_start)
+restart_button = ttk.Button(main_frame, text="Restart", command=game_start, style="Restart.TButton")
 restart_button.grid(row=2, column=0, columnspan=3)
 
 score_update()
@@ -221,6 +221,27 @@ style.configure('Idle.TButton',
                 font=('Segoe UI Symbol', 50),
                 padding=yippe,
                 relief="flat")
+
+style.configure("Restart.TButton",
+                background="#FFE6CC",
+                font=('Segoe Script', 10),
+                relief="flat"
+                )
+
+style.configure("Cross_Score.TLabel",
+                background="#F8CECC",
+                font=('Segoe Script', 10),
+                )
+
+style.configure("Tie_Score.TLabel",
+                background="#F5F5F5",
+                font=('Segoe Script', 10),
+                )
+
+style.configure("Circles_Score.TLabel",
+                background="#DAE8FC",
+                font=('Segoe Script', 10),
+                )
 
 # Creates loop for tkinter interface
 root.mainloop()
