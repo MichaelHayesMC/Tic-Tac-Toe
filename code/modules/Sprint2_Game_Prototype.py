@@ -121,7 +121,8 @@ def button_grid(parent_frame):
 # All tkinter widgets instantiated
 root = tk.Tk()
 root.title("Tic Tac Toe")
-root.geometry("400x400")
+root.geometry("290x400")
+root.resizable(False, False)
 
 # Updates score with the string and integer tkinter variables with auto updating properties
 def score_update():
