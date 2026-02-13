@@ -183,7 +183,10 @@ game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=10)
 create_buttons = button_grid(game_frame)
 
 restart_button = ttk.Button(main_frame, text="Restart", command=game_start, style="Restart.TButton")
-restart_button.grid(row=2, column=0, columnspan=3)
+restart_button.grid(row=2, column=0, columnspan=2)
+
+back_button = ttk.Button(main_frame, text="Back", style="Back.TButton")
+back_button.grid(row=2, column=1, columnspan=2)
 
 score_update()
 game_set()
@@ -226,8 +229,20 @@ style.configure('Idle.TButton',
 style.configure("Restart.TButton",
                 background="#FFE6CC",
                 font=('Segoe Script', 10),
-                relief="flat"
+                relief="flat",
+                padding=[-10,5,-10,5]
                 )
+
+style.map("Restart.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
+
+style.configure("Back.TButton",
+                background="#FFE6CC",
+                font=('Segoe Script', 10),
+                relief="flat",
+                padding=[-10,5,-10,5]
+                )
+
+style.map("Back.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
 
 style.configure("Cross_Score.TLabel",
                 background="#F8CECC",
