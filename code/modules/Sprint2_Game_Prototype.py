@@ -17,8 +17,9 @@ def game_set():
 # The necessary blueprint to create a 3x3 grid with button widgets
 class button_class:
     # States id var as self property on initiate class (class startup)
-    def __init__(self, id):
+    def __init__(self, id, record_list):
         self.id = id
+        self.record_list = record_list
 
     # Allocates each button to create the 3x3 grid in game_frame widget
     def grid_allocation(self):
@@ -59,7 +60,12 @@ class button_class:
 
         disable_count += 1
 
-        root.after(10, self.win_cond)
+        if disable_count != 9:
+            root.after(10, self.win_cond)
+        # Threshold for all buttons to be occupied till able to reset game
+        else:
+            root.after(2000, lambda: score_add("tie"))
+
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
@@ -85,10 +91,15 @@ class button_class:
                 
                 for win_scenario in win_list:
                     if len(set(x_list).intersection(set(win_scenario))) == 3:
-                        root.after(2000, score_add("cross"))
+                        for button in set(x_list).intersection(set(win_scenario)):
+                            self.record_list[button].config(style="XWin.TButton")
+                            for button in self.record_list:
+                                self.record_list[button].configure(state=tk.DISABLED)
+                            
+                        root.after(2000, lambda: score_add("cross"))
                     # Threshold for all buttons to be occupied till able to reset game
                     elif disable_count == 9:
-                        root.after(2000, score_add("tie"))
+                        root.after(2000, lambda: score_add("tie"))
                     
             elif self.button.cget("text") == "⭘":
                 o_list.append(self.id)
@@ -96,25 +107,26 @@ class button_class:
 
                 for win_scenario in win_list:
                     if len(set(o_list).intersection(set(win_scenario))) == 3:
-                        root.after(2000, score_add("circles"))
-                    # Threshold for all buttons to be occupied till able to reset game
-                    elif disable_count == 9:
-                        root.after(2000, score_add("tie"))
+                        for button in set(o_list).intersection(set(win_scenario)):
+                            self.record_list[button].config(style="OWin.TButton")
+                            for button in self.record_list:
+                                self.record_list[button].configure(state=tk.DISABLED)
+                        root.after(2000, lambda: score_add("circles"))
 
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
     def identification(self):
         self.button = ttk.Button(game_frame, command=self.button_func, style="Idle.TButton")
         self.grid_allocation()
+        key_name = self.id
+        value = self.button
+        self.record_list[key_name] = value
 
 # Creates 9 buttons for the 3x3 grid
 def button_grid(parent_frame):
     global record_list
     record_list = {}
     for id in range(1, 10):
-        key_name = f"button_id_{id}"
-        value = id
-        record_list[key_name] = value
-        button = button_class(id)
+        button = button_class(id, record_list)
         button.identification()
 
 # All tkinter widgets instantiated
@@ -218,6 +230,15 @@ style.configure('Crosses.TButton',
 
 style.map("Crosses.TButton", background=[("disabled", "#F8CECC")])
 
+style.configure('XWin.TButton',
+                foreground='Black',
+                font=('Segoe UI Symbol', 50),
+                padding=yippe,
+                background="#D5E8D4",
+                relief="flat")
+
+style.map("XWin.TButton", background=[("disabled", "#D5E8D4")])
+
 style.configure('Circles.TButton',
                 foreground='Black',
                 font=('Segoe UI Symbol', 50),
@@ -225,6 +246,16 @@ style.configure('Circles.TButton',
                 relief="flat")
 
 style.map("Circles.TButton", background=[("disabled", "#DAE8FC")])
+
+style.configure('OWin.TButton',
+                foreground='Black',
+                font=('Segoe UI Symbol', 50),
+                padding=yippe,
+                background="#D5E8D4",
+                relief="flat")
+
+style.map("OWin.TButton", background=[("disabled", "#D5E8D4")])
+
 
 style.configure('Idle.TButton',
                 foreground='Black',
