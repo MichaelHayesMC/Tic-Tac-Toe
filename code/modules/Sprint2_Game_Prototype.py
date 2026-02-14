@@ -51,20 +51,15 @@ class button_class:
         global disable_count
 
         if crosses == True:
-            self.button.config(text="✕", state=tk.DISABLED)
+            self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
             crosses = False
         elif crosses == False:
-            self.button.config(text="⭘", state=tk.DISABLED)
+            self.button.config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
             crosses = True
 
         disable_count += 1
 
-        # Threshold for all buttons to be occupied till able to reset game
-        if disable_count == 9:
-            score_add("tie")
-            game_start()
-
-        self.win_cond()
+        root.after(10, self.win_cond)
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
@@ -85,22 +80,26 @@ class button_class:
         # Convert the following if statements dependent on button type to a function
         if self.button.winfo_exists():
             if self.button.cget("text") == "✕":
-                self.button.configure(style="Crosses.TButton")
                 x_list.append(self.id)
                 x_list.sort()
                 
                 for win_scenario in win_list:
                     if len(set(x_list).intersection(set(win_scenario))) == 3:
-                        score_add("cross")
+                        root.after(2000, score_add("cross"))
+                    # Threshold for all buttons to be occupied till able to reset game
+                    elif disable_count == 9:
+                        root.after(2000, score_add("tie"))
                     
             elif self.button.cget("text") == "⭘":
-                self.button.configure(style="Circles.TButton")
                 o_list.append(self.id)
                 o_list.sort()
 
                 for win_scenario in win_list:
                     if len(set(o_list).intersection(set(win_scenario))) == 3:
-                        score_add("circles")
+                        root.after(2000, score_add("circles"))
+                    # Threshold for all buttons to be occupied till able to reset game
+                    elif disable_count == 9:
+                        root.after(2000, score_add("tie"))
 
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
     def identification(self):
@@ -147,7 +146,15 @@ def score_add(label_type):
         tie_score.set(tie_score.get() + 1)
     elif label_type == "circles":
         circles_score.set(circles_score.get() + 1)
-    
+
+    game_start()
+    score_update()
+
+def game_score_reset():
+    cross_score.set(0)
+    tie_score.set(0)
+    circles_score.set(0)
+
     game_start()
     score_update()
 
@@ -182,7 +189,7 @@ game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=10)
 
 create_buttons = button_grid(game_frame)
 
-restart_button = ttk.Button(main_frame, text="Restart", command=game_start, style="Restart.TButton")
+restart_button = ttk.Button(main_frame, text="Restart", command=game_score_reset, style="Restart.TButton")
 restart_button.grid(row=2, column=0, columnspan=2)
 
 back_button = ttk.Button(main_frame, text="Back", style="Back.TButton")
