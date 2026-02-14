@@ -1,6 +1,197 @@
 import tkinter as tk
 from tkinter import ttk
 
+class styling(ttk.Style):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        self.theme_use("clam")
+        #style2.map('Custom.TButton', background=[("active", "red")])
+
+        yippe = [-159, -10, -160, -2]
+
+        self.configure('Crosses.TButton',
+                        foreground='Black',
+                        font=('Segoe UI Symbol', 50),
+                        padding=yippe,
+                        background="#F8CECC",
+                        relief="flat")
+
+        self.map("Crosses.TButton", background=[("disabled", "#F8CECC")])
+
+        self.configure('XWin.TButton',
+                        foreground='Black',
+                        font=('Segoe UI Symbol', 50),
+                        padding=yippe,
+                        background="#D5E8D4",
+                        relief="flat")
+
+        self.map("XWin.TButton", background=[("disabled", "#D5E8D4")])
+
+        self.configure('Circles.TButton',
+                        foreground='Black',
+                        font=('Segoe UI Symbol', 50),
+                        padding=yippe,
+                        relief="flat")
+
+        self.map("Circles.TButton", background=[("disabled", "#DAE8FC")])
+
+        self.configure('OWin.TButton',
+                        foreground='Black',
+                        font=('Segoe UI Symbol', 50),
+                        padding=yippe,
+                        background="#D5E8D4",
+                        relief="flat")
+
+        self.map("OWin.TButton", background=[("disabled", "#D5E8D4")])
+
+
+        self.configure('Idle.TButton',
+                        foreground='Black',
+                        background="#f8f5f9",
+                        font=('Segoe UI Symbol', 50),
+                        padding=yippe,
+                        relief="flat")
+
+        self.configure("Restart.TButton",
+                        background="#FFE6CC",
+                        font=('Segoe Script', 10),
+                        relief="flat",
+                        padding=[-10,5,-10,5]
+                        )
+
+        self.map("Restart.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
+
+        self.configure("Back.TButton",
+                        background="#FFE6CC",
+                        font=('Segoe Script', 10),
+                        relief="flat",
+                        padding=[-10,5,-10,5]
+                        )
+
+        self.map("Back.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
+
+        self.configure("Cross_Score.TLabel",
+                        background="#F8CECC",
+                        font=('Segoe Script', 10),
+                        )
+
+        self.configure("Tie_Score.TLabel",
+                        background="#F5F5F5",
+                        font=('Segoe Script', 10),
+                        )
+
+        self.configure("Circles_Score.TLabel",
+                        background="#DAE8FC",
+                        font=('Segoe Script', 10),
+                        )
+
+# Takes tk as a parent to inherit all the tk. properties to make widgets
+class main_menu(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Tic Tac Toe")
+        self.geometry("580x400")
+
+        style = styling(self)
+
+        pvp_button = ttk.Button(
+            self, 
+            text="Player vs Player", 
+            command=lambda:playable_game(self)
+            )
+        pvp_button.pack()
+
+
+class playable_game(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        parent.withdraw()
+        self.title("Game")
+        self.geometry("290x400")
+        self.resizable(False, False)
+
+        # Int Variables that automatically change the looks of the GUI when changed
+        self.cross_score_label = tk.StringVar(value = "Crosses: ")
+        self.cross_score = tk.IntVar(value = 0)
+        self.cross_combined = tk.StringVar()
+
+        self.tie_score_label = tk.StringVar(value = "Tie: ")
+        self.tie_score = tk.IntVar(value = 0)
+        self.tie_combined = tk.StringVar()
+
+        self.circles_score_label = tk.StringVar(value = "Circles: ")
+        self.circles_score = tk.IntVar(value = 0)
+        self.circles_combined = tk.StringVar()
+
+        self.main_frame = tk.Frame(self, background="#E1D5E7", pady=10)
+        self.main_frame.pack()
+
+        # Need .get() for score to get the value rather than the label widget data itself
+        self.cross_score_board = ttk.Label(self.main_frame, textvariable=self.cross_combined, style="Cross_Score.TLabel", padding=11)
+        self.cross_score_board.grid(row=0, column=0)
+
+        self.tie_score_board = ttk.Label(self.main_frame, textvariable=self.tie_combined, style="Tie_Score.TLabel", padding=11)
+        self.tie_score_board.grid(row=0, column=1)
+
+        self.circles_score_board = ttk.Label(self.main_frame, textvariable=self.circles_combined, style="Circles_Score.TLabel", padding=11)
+        self.circles_score_board.grid(row=0, column=2)
+
+        self.game_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=5, pady=5)
+        self.game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=10)
+
+        self.button_grid(self.game_frame)
+
+        self.restart_button = ttk.Button(self.main_frame, text="Restart", command=game_score_reset, style="Restart.TButton")
+        self.restart_button.grid(row=2, column=0, columnspan=2)
+
+        self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton")
+        self.back_button.grid(row=2, column=1, columnspan=2)
+
+        # Updates score with the string and integer tkinter variables with auto updating properties
+        def score_update(self):
+            self.cross_combined.set(f"{self.cross_score_label.get()}{self.cross_score.get()}")
+            self.tie_combined.set(f"{self.tie_score_label.get()}{self.tie_score.get()}")
+            self.circles_combined.set(f"{self.circles_score_label.get()}{self.circles_score.get()}")
+
+        # Restart game initiation
+        def game_start(self):
+            # Looks for every game_frame child then deletes them to therefore be replaced
+            for button in self.game_frame.winfo_children():
+                button.destroy()
+
+            game_set()
+            button_grid(self.game_frame)
+
+        # Adds score for the int value for every won game
+        def score_add(label_type):
+            if label_type == "cross":
+                self.cross_score.set(self.cross_score.get() + 1)
+            elif label_type == "tie":
+                self.tie_score.set(self.tie_score.get() + 1)
+            elif label_type == "circles":
+                self.circles_score.set(self.circles_score.get() + 1)
+
+            game_start()
+            score_update()
+
+        def game_score_reset(self):
+            self.cross_score.set(0)
+            self.tie_score.set(0)
+            self.circles_score.set(0)
+
+            game_start()
+            score_update()
+
+        # Creates 9 buttons for the 3x3 grid
+        def button_grid(parent_frame):
+            global record_list
+            record_list = {}
+            for id in range(1, 10):
+                button = button_class(id, record_list)
+                button.identification()
+
 # Index of game recording components
 def game_set():
     global crosses
@@ -18,6 +209,7 @@ def game_set():
 class button_class:
     # States id var as self property on initiate class (class startup)
     def __init__(self, id, record_list):
+        super.__init__(self, parent)
         self.id = id
         self.record_list = record_list
 
@@ -61,10 +253,10 @@ class button_class:
         disable_count += 1
 
         if disable_count != 9:
-            root.after(10, self.win_cond)
+            game.after(10, self.win_cond)
         # Threshold for all buttons to be occupied till able to reset game
         else:
-            root.after(2000, lambda: score_add("tie"))
+            game.after(2000, lambda: score_add("tie"))
 
 
     # All possible win scenarios compared with current player input to find winner
@@ -96,10 +288,10 @@ class button_class:
                             for button in self.record_list:
                                 self.record_list[button].configure(state=tk.DISABLED)
                             
-                        root.after(2000, lambda: score_add("cross"))
+                        game.after(2000, lambda: score_add("cross"))
                     # Threshold for all buttons to be occupied till able to reset game
                     elif disable_count == 9:
-                        root.after(2000, lambda: score_add("tie"))
+                        game.after(2000, lambda: score_add("tie"))
                     
             elif self.button.cget("text") == "⭘":
                 o_list.append(self.id)
@@ -111,7 +303,7 @@ class button_class:
                             self.record_list[button].config(style="OWin.TButton")
                             for button in self.record_list:
                                 self.record_list[button].configure(state=tk.DISABLED)
-                        root.after(2000, lambda: score_add("circles"))
+                        game.after(2000, lambda: score_add("circles"))
 
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
     def identification(self):
@@ -121,181 +313,18 @@ class button_class:
         value = self.button
         self.record_list[key_name] = value
 
-# Creates 9 buttons for the 3x3 grid
-def button_grid(parent_frame):
-    global record_list
-    record_list = {}
-    for id in range(1, 10):
-        button = button_class(id, record_list)
-        button.identification()
+def game_wind():
+    # All tkinter widgets instantiated
 
-# All tkinter widgets instantiated
-root = tk.Tk()
-root.title("Tic Tac Toe")
-root.geometry("290x400")
-root.resizable(False, False)
+    #root.after(1000, root.deiconify)
+    #game.after(2000, game.destroy)
 
-# Updates score with the string and integer tkinter variables with auto updating properties
-def score_update():
-    cross_combined.set(f"{cross_score_label.get()}{cross_score.get()}")
-    tie_combined.set(f"{tie_score_label.get()}{tie_score.get()}")
-    circles_combined.set(f"{circles_score_label.get()}{circles_score.get()}")
-
-# Restart game initiation
-def game_start():
-    # Looks for every game_frame child then deletes them to therefore be replaced
-    for button in game_frame.winfo_children():
-        button.destroy()
-
+    score_update()
     game_set()
-    button_grid(game_frame)
-
-# Adds score for the int value for every won game
-def score_add(label_type):
-    if label_type == "cross":
-        cross_score.set(cross_score.get() + 1)
-    elif label_type == "tie":
-        tie_score.set(tie_score.get() + 1)
-    elif label_type == "circles":
-        circles_score.set(circles_score.get() + 1)
-
-    game_start()
-    score_update()
-
-def game_score_reset():
-    cross_score.set(0)
-    tie_score.set(0)
-    circles_score.set(0)
-
-    game_start()
-    score_update()
-
-# Int Variables that automatically change the looks of the GUI when changed
-cross_score_label = tk.StringVar(value = "Crosses: ")
-cross_score = tk.IntVar(value = 0)
-cross_combined = tk.StringVar()
-
-tie_score_label = tk.StringVar(value = "Tie: ")
-tie_score = tk.IntVar(value = 0)
-tie_combined = tk.StringVar()
-
-circles_score_label = tk.StringVar(value = "Circles: ")
-circles_score = tk.IntVar(value = 0)
-circles_combined = tk.StringVar()
-
-main_frame = tk.Frame(root, background="#E1D5E7", pady=10)
-main_frame.pack()
-
-# Need .get() for score to get the value rather than the label widget data itself
-cross_score_board = ttk.Label(main_frame, textvariable=cross_combined, style="Cross_Score.TLabel", padding=11)
-cross_score_board.grid(row=0, column=0)
-
-tie_score_board = ttk.Label(main_frame, textvariable=tie_combined, style="Tie_Score.TLabel", padding=11)
-tie_score_board.grid(row=0, column=1)
-
-circles_score_board = ttk.Label(main_frame, textvariable=circles_combined, style="Circles_Score.TLabel", padding=11)
-circles_score_board.grid(row=0, column=2)
-
-game_frame = tk.Frame(main_frame, background="#f0eaf3", padx=5, pady=5)
-game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=10)
-
-create_buttons = button_grid(game_frame)
-
-restart_button = ttk.Button(main_frame, text="Restart", command=game_score_reset, style="Restart.TButton")
-restart_button.grid(row=2, column=0, columnspan=2)
-
-back_button = ttk.Button(main_frame, text="Back", style="Back.TButton")
-back_button.grid(row=2, column=1, columnspan=2)
-
-score_update()
-game_set()
 
 
-own_frame = tk.Frame(highlightbackground="#B85450", highlightthickness=1)
-own_frame.pack()
-
-style = ttk.Style()
-
-style.theme_use("clam")
-#style2.map('Custom.TButton', background=[("active", "red")])
-
-yippe = [-159, -10, -160, -2]
-
-style.configure('Crosses.TButton',
-                foreground='Black',
-                font=('Segoe UI Symbol', 50),
-                padding=yippe,
-                background="#F8CECC",
-                relief="flat")
-
-style.map("Crosses.TButton", background=[("disabled", "#F8CECC")])
-
-style.configure('XWin.TButton',
-                foreground='Black',
-                font=('Segoe UI Symbol', 50),
-                padding=yippe,
-                background="#D5E8D4",
-                relief="flat")
-
-style.map("XWin.TButton", background=[("disabled", "#D5E8D4")])
-
-style.configure('Circles.TButton',
-                foreground='Black',
-                font=('Segoe UI Symbol', 50),
-                padding=yippe,
-                relief="flat")
-
-style.map("Circles.TButton", background=[("disabled", "#DAE8FC")])
-
-style.configure('OWin.TButton',
-                foreground='Black',
-                font=('Segoe UI Symbol', 50),
-                padding=yippe,
-                background="#D5E8D4",
-                relief="flat")
-
-style.map("OWin.TButton", background=[("disabled", "#D5E8D4")])
-
-
-style.configure('Idle.TButton',
-                foreground='Black',
-                background="#f8f5f9",
-                font=('Segoe UI Symbol', 50),
-                padding=yippe,
-                relief="flat")
-
-style.configure("Restart.TButton",
-                background="#FFE6CC",
-                font=('Segoe Script', 10),
-                relief="flat",
-                padding=[-10,5,-10,5]
-                )
-
-style.map("Restart.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
-
-style.configure("Back.TButton",
-                background="#FFE6CC",
-                font=('Segoe Script', 10),
-                relief="flat",
-                padding=[-10,5,-10,5]
-                )
-
-style.map("Back.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
-
-style.configure("Cross_Score.TLabel",
-                background="#F8CECC",
-                font=('Segoe Script', 10),
-                )
-
-style.configure("Tie_Score.TLabel",
-                background="#F5F5F5",
-                font=('Segoe Script', 10),
-                )
-
-style.configure("Circles_Score.TLabel",
-                background="#DAE8FC",
-                font=('Segoe Script', 10),
-                )
 
 # Creates loop for tkinter interface
-root.mainloop()
+if __name__ == "__main__":
+    menu = main_menu()
+    menu.mainloop()
