@@ -340,7 +340,7 @@ class scoreboard_page(tk.Toplevel):
         self.parent.withdraw()
         self.title("Scoreboard")
         self.geometry("415x360")
-        #self.resizable(False, False)
+        self.resizable(False, False)
 
         self.main_frame = tk.Frame(self, background="#E1D5E7", padx=10, pady=10)
         self.main_frame.pack()
