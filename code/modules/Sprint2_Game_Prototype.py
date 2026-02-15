@@ -85,40 +85,106 @@ class styling(ttk.Style):
                         background="#DAE8FC",
                         font=('Segoe Script', 10),
                         )
+        
+        self.configure("PVP.TButton",
+                       background=("#F8CECC"),
+                       font=("Segoe Script", 10),
+                       relief="flat",
+                       padding=[30, 170, 30, 170]
+                       )
+        
+        self.map("PVP.TButton", background=[("pressed", "#D38480"), ("active", "#D3ADAC")])
+        
+        self.configure("PVE.TButton",
+                background=("#DAE8FC"),
+                font=("Segoe Script", 10),
+                relief="flat",
+                padding=[30, 85, 30, 85]
+                )
+        
+        self.map("PVE.TButton", background=[("pressed", "#8CABD6"), ("active", "#B5C0CE")])
+
+        self.configure("Scoreboard.TButton",
+                background=("#FFF2CC"),
+                font=("Segoe Script", 10),
+                relief="flat",
+                padding=[30, 48, 30, 48]
+                )
+        
+        self.map("Scoreboard.TButton", background=[("pressed", "#D6C88C"), ("active", "#CEC8B5")])
+
+        self.configure("Tutorial.TButton",
+                background=("#D5E8D4"),
+                font=("Segoe Script", 10),
+                relief="flat",
+                )
+        
+        self.map("Tutorial.TButton", background=[("pressed", "#8EAF8C"), ("active", "#99B697")])
+        
+        self.configure("Title.TLabel",
+                       background="#f0eaf3",
+                       font=("Segoe Script", 30),
+                       relief="flat",
+                       padding=[40, 90, 40, 90]
+                       )
 
 # Takes tk as a parent to inherit all the tk. properties to make widgets
 class main_menu(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Tic Tac Toe")
-        self.geometry("580x400")
+        self.geometry("545x395")
+        self.resizable(False, False)
 
         style = styling(self)
 
-        menu_frame = tk.Frame(
+        main_frame = tk.Frame(
             self,
             background=("#E1D5E7"),
             padx=10,
-            pady=10,
-            height=400,
-            width=400
+            pady=10
         )
-        menu_frame.pack()
+        main_frame.pack()
+
+        title = ttk.Label(
+            main_frame, 
+            text="Tic Tac Toe",
+            wraplength=100,
+            style="Title.TLabel"
+            )
+        title.grid(row=0, column=0)
+
+        widgets_frame = tk.Frame(main_frame, padx=3, pady=3)
+        widgets_frame.grid(row=0, column=1)
 
         pvp_button = ttk.Button(
-            menu_frame, 
-            text="Player vs Player", 
+            widgets_frame, 
+            text="PVP ⚔️", 
             command=lambda:playable_game(self),
-            style=("Back.TButton")
+            style=("PVP.TButton")
             )
-        pvp_button.grid(row=0, column=0, padx=2, pady=2)
+        pvp_button.grid(row=0, column=0, padx=2, pady=2, rowspan=3)
 
         pve_button = ttk.Button(
-            menu_frame, 
-            text="Player vs Ai", 
-            style=("Back.TButton")
+            widgets_frame, 
+            text="PVE 🤖", 
+            style=("PVE.TButton")
             )
-        pve_button.grid(row=0, column=1, padx=2, pady=2)
+        pve_button.grid(row=0, column=1, sticky="n", padx=2, pady=2)
+
+        score_board_button = ttk.Button(
+            widgets_frame, 
+            text="ScoreBoard 📊",
+            style="Scoreboard.TButton"
+            )
+        score_board_button.grid(row=1, column=1, sticky="nsew", padx=2)
+
+        tutorial_button = ttk.Button(
+            widgets_frame, 
+            text="Tutorial ⚙️",
+            style=("Tutorial.TButton")
+            )
+        tutorial_button.grid(row=2, column=1, sticky="sew", padx=2, pady=2)
 
 class playable_game(tk.Toplevel):
     def __init__(self, parent):
