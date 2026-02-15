@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+import random
+
 class styling(ttk.Style):
     def __init__(self, parent):
         super().__init__(parent)
@@ -171,7 +173,7 @@ class main_menu(tk.Tk):
         pvp_button = ttk.Button(
             widgets_frame, 
             text="PVP ⚔️", 
-            command=lambda:playable_game(self),
+            command=lambda:playable_game(self, "No_AI"),
             style=("PVP.TButton")
             )
         pvp_button.grid(row=0, column=0, padx=2, pady=2, rowspan=3)
@@ -179,7 +181,8 @@ class main_menu(tk.Tk):
         pve_button = ttk.Button(
             widgets_frame, 
             text="PVE 🤖", 
-            style=("PVE.TButton")
+            style=("PVE.TButton"),
+            command=lambda:playable_game(self, "Yes_AI")
             )
         pve_button.grid(row=0, column=1, sticky="n", padx=2, pady=2)
 
@@ -200,9 +203,10 @@ class main_menu(tk.Tk):
         tutorial_button.grid(row=2, column=1, sticky="sew", padx=2, pady=2)
 
 class playable_game(tk.Toplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, game_type):
         super().__init__(parent)
         self.parent = parent
+        self.game_type = game_type
 
         self.parent.withdraw()
         self.title("Game")
@@ -293,7 +297,7 @@ class playable_game(tk.Toplevel):
         global record_list
         record_list = {}
         for id in range(1, 10):
-            button = button_class(id, record_list, parent)
+            button = button_class(id, record_list, parent, self.game_type)
             button.identification(self.game_frame)
 
 class tutorial_page(tk.Toplevel):
@@ -384,10 +388,22 @@ class scoreboard_page(tk.Toplevel):
 # The necessary blueprint to create a 3x3 grid with button widgets
 class button_class:
     # States id var as self property on initiate class (class startup)
-    def __init__(self, id, record_list, parent):
+    def __init__(self, id, record_list, parent, game_type):
         self.id = id
         self.record_list = record_list
         self.parent = parent
+        self.game_type = game_type
+
+        self.win_list = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 6, 9],
+            [1, 5, 9],
+            [3, 5, 7]
+        ]
 
     # Allocates each button to create the 3x3 grid in game_frame widget
     def grid_allocation(self):
@@ -434,22 +450,34 @@ class button_class:
         else:
             self.parent.after(2000, lambda: self.parent.score_add("tie"))
 
+    def button_func_ai(self):
+        global possible_moves
+        looking = True
+        global disable_count
+        disable_count += 1
+
+        self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
+        possible_moves.remove(self.id)
+        if disable_count != 9:
+            self.parent.after(10, self.win_cond)
+        else:
+            self.parent.after(2000, lambda: self.parent.score_add("tie"))
+
+        if possible_moves != []:
+            while looking:
+                a = random.randrange(1,9)
+                for move in possible_moves:
+                    if a == move:
+                        self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                        possible_moves.remove(move)
+                        looking = False
+                        print(a)
+            print(possible_moves)
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
         global x_list
         global o_list
-
-        win_list = [
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9],
-            [1, 4, 7],
-            [2, 5, 8],
-            [3, 6, 9],
-            [1, 5, 9],
-            [3, 5, 7]
-        ]
 
         # Convert the following if statements dependent on button type to a function
         if self.button.winfo_exists():
@@ -457,7 +485,7 @@ class button_class:
                 x_list.append(self.id)
                 x_list.sort()
                 
-                for win_scenario in win_list:
+                for win_scenario in self.win_list:
                     if len(set(x_list).intersection(set(win_scenario))) == 3:
                         for button in set(x_list).intersection(set(win_scenario)):
                             self.record_list[button].config(style="XWin.TButton")
@@ -473,7 +501,7 @@ class button_class:
                 o_list.append(self.id)
                 o_list.sort()
 
-                for win_scenario in win_list:
+                for win_scenario in self.win_list:
                     if len(set(o_list).intersection(set(win_scenario))) == 3:
                         for button in set(o_list).intersection(set(win_scenario)):
                             self.record_list[button].config(style="OWin.TButton")
@@ -483,7 +511,10 @@ class button_class:
 
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
     def identification(self, game_frame):
-        self.button = ttk.Button(game_frame, command=self.button_func, style="Idle.TButton")
+        if self.game_type == "Yes_AI":
+            self.button = ttk.Button(game_frame, command=self.button_func_ai, style="Idle.TButton")
+        elif self.game_type == "No_AI":
+            self.button = ttk.Button(game_frame, command=self.button_func, style="Idle.TButton")
         self.grid_allocation()
         key_name = self.id
         value = self.button
@@ -496,11 +527,15 @@ def game_set():
     global x_list
     global o_list
     global disable_count
+    global activate_ai
+    global possible_moves
     disable_count = 0
     crosses = True
     record_list = {}
     x_list = []
     o_list = []
+    activate_ai = False
+    possible_moves = [1,2,3,4,5,6,7,8,9]
 
 # Creates loop for tkinter interface
 if __name__ == "__main__":
