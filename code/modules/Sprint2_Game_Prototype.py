@@ -127,6 +127,17 @@ class styling(ttk.Style):
                        relief="flat",
                        padding=[40, 90, 40, 90]
                        )
+        
+        self.configure("Treeview.Heading",
+                       relief="flat",
+                       background="#f0eaf3",
+                       borderwidth=1
+                       )
+        self.configure("Treeview",
+                       background="#f0eaf3",
+                       bordercolor="#f0eaf3",
+                       borderwidth=1
+                       )
 
 # Takes tk as a parent to inherit all the tk. properties to make widgets
 class main_menu(tk.Tk):
@@ -175,14 +186,16 @@ class main_menu(tk.Tk):
         score_board_button = ttk.Button(
             widgets_frame, 
             text="ScoreBoard 📊",
-            style="Scoreboard.TButton"
+            style="Scoreboard.TButton",
+            command=lambda:scoreboard_page(self)
             )
         score_board_button.grid(row=1, column=1, sticky="nsew", padx=2)
 
         tutorial_button = ttk.Button(
             widgets_frame, 
             text="Tutorial ⚙️",
-            style=("Tutorial.TButton")
+            style=("Tutorial.TButton"),
+            command=lambda:tutorial_page(self)
             )
         tutorial_button.grid(row=2, column=1, sticky="sew", padx=2, pady=2)
 
@@ -282,6 +295,91 @@ class playable_game(tk.Toplevel):
         for id in range(1, 10):
             button = button_class(id, record_list, parent)
             button.identification(self.game_frame)
+
+class tutorial_page(tk.Toplevel):
+    def __init__(self, parent):
+            super().__init__(parent)
+            self.parent = parent
+
+            self.parent.withdraw()
+            self.title("Tutorial")
+            self.geometry("330x230")
+            self.resizable(False, False)
+
+            self.main_frame = tk.Frame(self, background="#E1D5E7", padx=10, pady=10)
+            self.main_frame.pack()
+
+            self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=5, pady=5)
+            self.widget_frame.grid(row=0)
+
+            self.rule_title = tk.Label(self.widget_frame, text="Rules:", background="#f0eaf3", font=('Segoe Script', 10))
+            self.rule_title.pack()
+
+            self.rule_info = tk.Label(
+                self.widget_frame, 
+                text=(
+                    "Tic-Tac-Toe is a two-player game played on a 3x3 grid. "
+                    "Players alternate placing 'X' or 'O' in empty squares, with the goal of being the first to get three of their marks in a row (horizontally, vertically, or diagonally). "
+                    "The first player (often 'X') goes first, and the game ends in a tie if all nine squares are filled without three-in-a-row. "
+                    ),
+                wraplength=300,
+                justify="center",
+                background="#f0eaf3", 
+                font=('Segoe Script', 8)
+            )
+            self.rule_info.pack()
+
+            self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
+            self.back_button.grid(row=1, padx=10, pady=10)
+
+class scoreboard_page(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+
+        self.parent.withdraw()
+        self.title("Scoreboard")
+        self.geometry("415x360")
+        #self.resizable(False, False)
+
+        self.main_frame = tk.Frame(self, background="#E1D5E7", padx=10, pady=10)
+        self.main_frame.pack()
+
+        self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=5, pady=5)
+        self.widget_frame.grid(row=0)
+
+        self.hscore_title = tk.Label(self.widget_frame, text="HIGH SCORES", background="#f0eaf3", font=('Segoe Script', 17), padx=7, pady=5)
+        self.hscore_title.grid(row=0, sticky="w")
+
+        treeview_headers = ("Rank", "Name", "Score")
+        self.score_display = ttk.Treeview(self.widget_frame, columns=treeview_headers, show="headings")
+        self.score_display.grid(row=1, padx=5, pady=5)
+
+        self.score_display.heading("Rank", text="RANK", anchor="w")
+        self.score_display.heading("Name", text="NAME", anchor="w")
+        self.score_display.heading("Score", text="SCORE (WINS - LOSSES)", anchor="w")
+
+        self.score_display.column("Rank", minwidth=80, width=80, anchor="w")
+        self.score_display.column("Name", minwidth=80, width=80, anchor="w")
+        self.score_display.column("Score", minwidth=210, width=210, anchor="w")
+
+        sample = [
+            ("1ST", "AAA", "100000000"),
+            ("2ND", "AAA", "20"),
+            ("3RD", "AAA", "12"),
+            ("4TH", "AAA", "11"),
+            ("5TH", "AAA", "11"),
+            ("6TH", "AAA", "10"),
+            ("7TH", "AAA", "5"),
+            ("8TH", "AAA", "3"),
+            ("9TH", "AAA", "2"),
+            ("10TH", "AAA", "1")
+            ]
+        for record in sample:
+            self.score_display.insert("", "end", values=record)
+
+        self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
+        self.back_button.grid(row=1, padx=10, pady=10)
 
 # The necessary blueprint to create a 3x3 grid with button widgets
 class button_class:
