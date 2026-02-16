@@ -133,12 +133,15 @@ class styling(ttk.Style):
         self.configure("Treeview.Heading",
                        relief="flat",
                        background="#f0eaf3",
-                       borderwidth=1
+                       borderwidth=1,
+                       font=("Segoe Script", 8)
                        )
         self.configure("Treeview",
                        background="#f0eaf3",
                        bordercolor="#f0eaf3",
-                       borderwidth=1
+                       borderwidth=1,
+                       font=("Segoe Script", 8),
+                       foreground="#1C1C1C"
                        )
 
 # Takes tk as a parent to inherit all the tk. properties to make widgets
@@ -434,84 +437,90 @@ class button_class:
     def button_func(self):
         global crosses
         global disable_count
+        global x_list
+        global o_list
 
         if crosses == True:
             self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
+            x_list.append(self.id)
+            x_list.sort()
             crosses = False
         elif crosses == False:
             self.button.config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+            o_list.append(self.id)
+            o_list.sort()
             crosses = True
 
         disable_count += 1
 
-        if disable_count != 9:
-            self.parent.after(10, self.win_cond)
+        self.win_cond()
+
+        # Threshold for all buttons to be occupied till able to reset game
+        if disable_count == 9 and game_won == False:
+                    print("huh")
+                    self.parent.after(2000, lambda: self.parent.score_add("tie"))
 
     def button_func_ai(self):
         global possible_moves
         global disable_count
-        idk = True
+        global x_list
+        global o_list
+        global game_won
         looking = True
         
         disable_count += 1
 
         self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
+        x_list.append(self.id)
+        x_list.sort()
         possible_moves.remove(self.id)
+        
+        self.win_cond()
 
-        if possible_moves != []:
+        if possible_moves != [] and game_won == False:
             while looking:
                 a = random.randrange(1,9)
                 for move in possible_moves:
                     if a == move:
                         self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                        o_list.append(a)
+                        o_list.sort()
                         possible_moves.remove(move)
                         looking = False
                         disable_count += 1
-        
-        print(disable_count)
+                        self.win_cond()
 
-
-        self.parent.after(100, self.win_cond)
+        # Threshold for all buttons to be occupied till able to reset game
+        if disable_count == 9 and game_won == False:
+                    print("huh")
+                    self.parent.after(2000, lambda: self.parent.score_add("tie"))
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
         global x_list
         global o_list
+        global disable_count
+        global game_won
 
         # Convert the following if statements dependent on button type to a function
         if self.button.winfo_exists():
-            if self.button.cget("text") == "✕":
-                x_list.append(self.id)
-                x_list.sort()
-                
-                for win_scenario in self.win_list:
-                    if len(set(x_list).intersection(set(win_scenario))) == 3:
-                        for button in set(x_list).intersection(set(win_scenario)):
-                            self.record_list[button].config(style="XWin.TButton")
-                            for button in self.record_list:
-                                self.record_list[button].configure(state=tk.DISABLED)
-                            
-                        self.parent.after(2000, lambda: self.parent.score_add("cross"))
-            
-            elif self.button.cget("text") == "⭘":
-                o_list.append(self.id)
-                o_list.sort()
+            for win_scenario in self.win_list:
+                if len(set(x_list).intersection(set(win_scenario))) == 3:
+                    game_won = True
+                    for button in set(x_list).intersection(set(win_scenario)):
+                        self.record_list[button].config(style="XWin.TButton")
+                        for button in self.record_list:
+                            self.record_list[button].configure(state=tk.DISABLED)
+                    self.parent.after(2000, lambda: self.parent.score_add("cross"))
 
-                for win_scenario in self.win_list:
-                    if len(set(o_list).intersection(set(win_scenario))) == 3:
-                        for button in set(o_list).intersection(set(win_scenario)):
-                            self.record_list[button].config(style="OWin.TButton")
-                            for button in self.record_list:
-                                self.record_list[button].configure(state=tk.DISABLED)
-                        self.parent.after(2000, lambda: self.parent.score_add("circles"))
-
-            # Threshold for all buttons to be occupied till able to reset game
-            elif disable_count == 9:
-                print("huh")
-                self.parent.after(2000, lambda: self.parent.score_add("tie"))
-            
-            else:
-                print("hi")
+            for win_scenario in self.win_list:
+                if len(set(o_list).intersection(set(win_scenario))) == 3:
+                    game_won = True
+                    for button in set(o_list).intersection(set(win_scenario)):
+                        self.record_list[button].config(style="OWin.TButton")
+                        for button in self.record_list:
+                            self.record_list[button].configure(state=tk.DISABLED)
+                    self.parent.after(2000, lambda: self.parent.score_add("circles"))
 
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
     def identification(self, game_frame):
@@ -533,6 +542,8 @@ def game_set():
     global disable_count
     global activate_ai
     global possible_moves
+    global game_won
+    game_won = False
     disable_count = 0
     crosses = True
     record_list = {}
