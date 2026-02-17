@@ -6,7 +6,7 @@ __Sprint One Design__
 <img src="../assets\Sprint1_Game.png" alt="Sprint 1 Outcome" width="650"/>
 
 __Sprint Two Design__  
-<img src="../assets\markdown-images\Trial_Notes_Images\Sprint_Outcomes\Sprint_2_Outcome.png" alt="Sprint 2 Outcome" width="650"/>
+<img src="../assets\Sprint2_Game.PNG" alt="Sprint 2 Outcome" width="650"/>
 
 Over the course of my trialling with my stakeholders for my sprint one design, I have gotten mostly constructive criticism which allowed me to make slight improvements from the initial prototype design. This information is gathered via a forum prompting questions for my stakeholders. This will therefore give me the feedback I need to improve my design to fit the needs of my audience fulfilling my intended purpose of making a satisfactory interface.
 
@@ -18,9 +18,9 @@ My first stakeholder had requested for my next interaction to incorporate a quot
 
 * __Integration__
 
-<img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_2\Sprint2_Integration_Nathan.png" alt="Integration - Stakeholder one" width="650"/>
+<img src="../assets\Sprint2_Game.PNG" alt="Integration - Stakeholder one" width="650"/>
 
->(How I have fufilled the stakeholder request)
+>Shown by the following image, I have managed to make a custom tkinter theme using the built in ttk.style tkinter widget attribute modifier. I was able to use this to resize, recolour and modify a multitude of different design aspects of my programme. I was able to make the buttons stand out more using colours like, red, blue, yellow and green allowing players to easily see what is available to their disposal in terms of my game.
 
 ### 2️⃣ Stakeholder Two (Astyn)
 
@@ -30,9 +30,9 @@ For my second stakeholder, they have requested that I incorporate a unique funct
 
 * __Integration__
 
-<img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_2\Sprint2-3_Integration_Ope.png" alt="Integration - Stakeholder two" width="650"/>
+<img src="../assets\Sprint2_Game.PNG" width="650"/>
 
->(How I have fufilled the stakeholder request)
+>Regarding my second stakeholder's feedback, I have managed to incorporate the requested playability with the ability to play against an ai that randomly chooses spaces on the game grid after the player has made a choice. Therefore the ai will continously fill up the board as the player tries to win mimicking another player.
 
 ### 3️⃣ Stakeholder Three (Zane)
 
@@ -42,14 +42,14 @@ For my third stakeholder they have requested in terms of my digital outcome that
 
 * __Integration__
 
-<img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_2\Sprint2-3_Integration_Ope.png" alt="Integration - Stakeholder three" width="650"/>
+<img src="../assets\Markdown_images\Stakeholder_Integration\Sprint2_Game.PNG" alt="Integration - Stakeholder three" width="650"/>
 
->(How I have fufilled the stakeholder request)
+>Regarding my third stakeholder, I have managed to import the request of a more appealing 3x3 game grid. As shown above, I have managed to use tkinter themes and styles to make a custom layout that is clean and easier to read instead of the small rectangular buttons also making it hard to click.
 
 ## ⛓️ Sprint Two → Sprint Three
 
 __Sprint Two Design__  
-<img src="../assets\markdown-images\Trial_Notes_Images\Sprint_Outcomes\Sprint_2_Outcome.png" alt="Sprint 2 Outcome" width="650"/>
+<img src="../assets\Sprint2_Game.PNG" alt="Sprint 2 Outcome" width="650"/>
 
 __Sprint Three Design__  
 <img src="../assets\markdown-images\Trial_Notes_Images\Sprint_Outcomes\Sprint_3_Outcome.png" alt="Sprint 3 Outcome" width="650"/>
@@ -60,11 +60,11 @@ Over the course of my trialling with my stakeholders for my sprint two design, I
 
 * __Request(s)__
 
-Text
+After I had finished my 2nd sprint, my first stakeholder trialled my programme and therefore came with the conclusion that my programme could use a working scoreboard since the current was just a static sample via a list. I intend to add this feature since it will add some competitiveness to my digital outcome for my end-users.
 
 * __Integration__
 
-<img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_3\Sprint3_Integration_Nathan.png" alt="Integration - Stakeholder one" width="650"/>
+<img src="../" width="650"/>
 
 >(How I have fufilled the stakeholder request)
 
@@ -72,47 +72,24 @@ Text
 
 * __Request(s)__
 
-Text
+My second stakeholder has requested that in terms of the PVE functionality, the bot seems limited in its ability to be a comprehensive adversary for the player making it easy to win against. I intend to add this feature into my programme since the point of the PVE system is to mimic a human like gameplay for the player to enjoy and use their brain to problem solve against. Therefore the difficulty of my programme must be increased to make the digital outcome a pleasant experience.
 
 * __Integration__
 
-<img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_3\Sprint3_Integration_Nathan.png" alt="Integration - Stakeholder two" width="650"/>
+<img src="../" alt="Integration - Stakeholder two" width="650"/>
 
->(How I have fufilled the stakeholder request)
+>My second stakeholder has requested that I 
 
 ### 3️⃣ Stakeholder Three (Zane)
 
 * __Request(s)__
 
-Text
+My third stakeholder had requested that I change the fluedity of my programme. In order to achieve this I will in turn try to make the functionality of wati timers more dynamic due to it being argued that the wait time between animation intervals was a bit long.
+
+I will incorporate this feedback since having an issue that is repeatidly a nuisance can make the user experience of my digital outcome unpleasant therefore against my intentions of my end-user considerations.
 
 * __Integration__
 
 <img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_3\Sprint3_Integration_Astyn.png" alt="Integration - Stakeholder three" width="650"/>
 
 >(How I have fufilled the stakeholder request)
-
-## ✨ Sprint Three → Beyond
-
-__Sprint Three Design__  
-<img src="../assets\markdown-images\Trial_Notes_Images\Sprint_Outcomes\Sprint_3_Outcome.png" alt="Sprint 3 Outcome" width="650"/>
-
-I have managed to complete my program for this is my final product. There will be final feedback for my last design in which I will analyse for possible integration and ways that I could improve the program if I were to work on this continuously for a longer duration of time.
-
-### 1️⃣ Stakeholder One (Opeloge)
-
-* __Request(s)__
-
-Text
-
-### 2️⃣ Stakeholder Two (Astyn)
-
-* __Request(s)__
-
-Text
-
-### 3️⃣ Stakeholder Three (Astyn)
-
-* __Request(s)__
-
-Text
