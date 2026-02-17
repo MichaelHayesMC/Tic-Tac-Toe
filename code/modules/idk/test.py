@@ -15,10 +15,24 @@ one = "I like pizza!"
 two = "I like pizza!"
 text_data = [one, two]
 
+score_data = [
+    ("Name", "Score"),
+    ("Name", "Score"),
+    ("Name", "Score"),
+    ("Name", "Score"),
+    ("Name", "Score"),
+    ("Name", "Score"),
+    ("Name", "Score"),
+    ("Name", "Score"),
+]
+
+#score_data = ["Name Score"]
+
 file_path = "output.txt"
 
 with open(file_path, "a") as file:
-    file.writelines(f"{text_data}\nhi\n")
+    for player in score_data:
+        file.writelines(f"{player}\n")
     print(f"txt file '{file_path}' was created")
 
 root = tk.Tk()
