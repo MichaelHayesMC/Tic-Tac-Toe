@@ -12,9 +12,9 @@ As presented above I have been able to fulfil the goals that I had set for mysel
 
 ### Sprint 2
 
-<img src="../" alt="Trello Board Sprint 2 Completion" width="650"/>
+<img src="../assets\Markdown_images\Sprint2_Trello_Records.PNG" alt="Trello Board Sprint 2 Completion" width="650"/>
 
-Text
+Presented by the picture above, I was able to fufil the goals that I had set myself for this sprint. I continued to use the organising method of separating different sprint categories making it easier to keep track of which function is for which sprint.
 
 ### Sprint 3
 
