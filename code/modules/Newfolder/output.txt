@@ -1,0 +1,6 @@
+I like pizza!+I like pizza!
+hi
+('I like pizza!', 'I like pizza!')
+hi
+['I like pizza!', 'I like pizza!']
+hi
