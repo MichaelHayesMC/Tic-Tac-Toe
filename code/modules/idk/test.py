@@ -1,11 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
 
-def testing():
-    with open(file_path, "r") as file:
-        for line in file.readlines():
-            table.insert("", "end", values=line)
-        print(file.readlines())
+file_path = "output.txt"
+
+# def testing():
+#     with open(file_path, "r") as file:
+#         for line in file.readlines():
+#             table.insert("", "end", values=line)
+#         print(file.readlines())
         #table.insert("", "end", values=file.readlines())
     
     # with open(file_path, "w") as file:
@@ -16,37 +18,60 @@ two = "I like pizza!"
 text_data = [one, two]
 
 score_data = [
-    ("Name", "Score"),
-    ("Name", "Score"),
-    ("Name", "Score"),
-    ("Name", "Score"),
-    ("Name", "Score"),
-    ("Name", "Score"),
-    ("Name", "Score"),
-    ("Name", "Score"),
+    "Name1" "100000",
+    "Name2" "100000",
+    "Name3" "100000", 
+    "Name4" "100000", 
+    "Name5" "100000", 
 ]
 
-#score_data = ["Name Score"]
+sample = ["Name Score"] 
+# Will have to append placing at the beginning like so: "Placing Name Score" 
+## Or may want to transport as vars then convert to str: f"{Placing} {Name} {Score}"
 
-file_path = "output.txt"
+player_data1 = {
+    "player1":10000,
+    "player2":10,
+    "player3":20
+}
 
-with open(file_path, "a") as file:
+player_data= {
+    10000:"player1",
+    10:"player2",
+    20:"player3"
+}
+
+#player_data["player4"] = 40
+
+newlist = []
+
+for value in player_data:
+    newlist.append(value)
+
+newlist.sort(reverse=True)
+print(newlist)
+
+
+with open(file_path, "w") as file:
     for player in score_data:
         file.writelines(f"{player}\n")
     print(f"txt file '{file_path}' was created")
 
-root = tk.Tk()
+
+
+
+# root = tk.Tk()
     
-title = ("RANK", "NAME", "SCORE")
+# title = ("RANK", "NAME", "SCORE")
 
-table = ttk.Treeview(root, show="headings", columns=title)
-table.pack()
+# table = ttk.Treeview(root, show="headings", columns=title)
+# table.pack()
 
-table.heading("RANK", text="RANK")
-table.heading("NAME", text="RANK")
-table.heading("SCORE", text="RANK")
+# table.heading("RANK", text="RANK")
+# table.heading("NAME", text="RANK")
+# table.heading("SCORE", text="RANK")
 
-save_but = tk.Button(root, text="save", command=testing)
-save_but.pack()
+# save_but = tk.Button(root, text="save", command=testing)
+# save_but.pack()
 
-root.mainloop()
+# root.mainloop()
