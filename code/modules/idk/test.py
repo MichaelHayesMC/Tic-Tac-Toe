@@ -13,27 +13,9 @@ file_path = "output.txt"
     # with open(file_path, "w") as file:
     #     file.write
 
-one = "I like pizza!"
-two = "I like pizza!"
-text_data = [one, two]
-
-score_data = [
-    "Name1" "100000",
-    "Name2" "100000",
-    "Name3" "100000", 
-    "Name4" "100000", 
-    "Name5" "100000", 
-]
-
 sample = ["Name Score"] 
 # Will have to append placing at the beginning like so: "Placing Name Score" 
 ## Or may want to transport as vars then convert to str: f"{Placing} {Name} {Score}"
-
-player_data1 = {
-    "player1":10000,
-    "player2":10,
-    "player3":20
-}
 
 player_data= {
     10000:"player1",
@@ -41,23 +23,36 @@ player_data= {
     20:"player3"
 }
 
-#player_data["player4"] = 40
+player_data[40] = "player4"
 
 newlist = []
 
 for value in player_data:
     newlist.append(value)
 
-newlist.sort(reverse=True)
-print(newlist)
+#newlist.sort(reverse=True)
+#print(newlist)
 
+newerlist = {}
 
-with open(file_path, "w") as file:
-    for player in score_data:
-        file.writelines(f"{player}\n")
-    print(f"txt file '{file_path}' was created")
+# with open(file_path, "w") as file: 
+#     for i in newlist:
+#         file.write(f"{i} {player_data[i]}\n")
 
+with open(file_path, "r") as file:
+    for line in file.readlines():
+        print(f"Line Split: {line.split()}")
+        # Automatically assigns values to the vars in list
+        value, key = line.split()
+        newerlist[key] = value
 
+newernewlist = []
+
+for value in newerlist:
+    newernewlist.append(value)
+
+for i in newernewlist:
+    print(f"{i} {newerlist[i]}")
 
 
 # root = tk.Tk()

@@ -1,5 +1,4 @@
-Name1100000
-Name2100000
-Name3100000
-Name4100000
-Name5100000
+10000 player1
+10 player2
+20 player3
+40 player4
