@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-
 import random
 
 save_file_path = "score_board.txt"
@@ -173,7 +172,7 @@ class main_menu(tk.Tk):
             )
         title.grid(row=0, column=0)
 
-        widgets_frame = tk.Frame(main_frame, padx=3, pady=3)
+        widgets_frame = tk.Frame(main_frame, padx=3, pady=3, background="#f0eaf3")
         widgets_frame.grid(row=0, column=1)
 
         pvp_button = ttk.Button(
@@ -253,15 +252,23 @@ class playable_game(tk.Toplevel):
         self.restart_button = ttk.Button(self.main_frame, text="Restart", command=self.game_score_reset, style="Restart.TButton")
         self.restart_button.grid(row=2, column=0, columnspan=2)
 
-        self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=self.exit)
+        self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=self.game_exit)
         self.back_button.grid(row=2, column=1, columnspan=2)
 
         self.score_update()
         game_set()
 
     def exit(self):
-        self.after(1, self.parent.deiconify)
-        self.after(1, self.destroy)
+        print(self.parent)
+        self.parent.deiconify()
+        self.destroy()
+
+    def game_exit(self):
+        if self.game_type == "Yes_AI":
+            score_confirmation(self, self.parent)
+        else:
+            self.parent.deiconify()
+        self.destroy()
     
     # Updates score with the string and integer tkinter variables with auto updating properties
     def score_update(self):
@@ -305,6 +312,46 @@ class playable_game(tk.Toplevel):
         for id in range(1, 10):
             button = button_class(id, record_list, parent, self.game_type)
             button.identification(self.game_frame)
+
+
+class score_confirmation(tk.Toplevel):
+    def __init__(self, parent, grandparent):
+            super().__init__(grandparent)
+            self.parent = parent
+            self.grandparent = grandparent
+            self.title("Save Score Prompt")
+            self.geometry("330x265")
+            self.resizable(False, False)
+
+            self.main_frame = tk.Frame(self, background="#E1D5E7", padx=10, pady=10)
+            self.main_frame.pack()
+
+            self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=30, pady=30)
+            self.widget_frame.pack()
+
+            self.score_title = tk.Label(self.widget_frame, text=f"Score: 9999999", background="#f0eaf3", font=('Segoe Script', 15), padx=20, pady=5, width=200)
+            self.score_title.pack()
+
+            self.insert_name = tk.Label(self.widget_frame, text="Please Insert User:", background="#f0eaf3", font=('Segoe Script', 10), padx=20, pady=5, width=200)
+            self.insert_name.pack()
+
+            self.insert_widget_frame = tk.Frame(self.widget_frame)
+            self.insert_widget_frame.pack()
+
+            self.letter1 = ttk.Entry(self.insert_widget_frame, width=2, font=('Segoe Script', 20), justify="center")
+            self.letter1.grid(column=0, row=1, sticky="e")
+            self.letter2 = ttk.Entry(self.insert_widget_frame, width=2, font=('Segoe Script', 20), justify="center")
+            self.letter2.grid(column=1, row=1, sticky="")
+            self.letter3 = ttk.Entry(self.insert_widget_frame, width=2, font=('Segoe Script', 20), justify="center")
+            self.letter3.grid(column=2, row=1, sticky="w")
+            
+            self.confirm_button = ttk.Button(self.main_frame, text="Confirm", style="Back.TButton", command=self.exit)
+            self.confirm_button.pack(padx=10, pady=10)
+
+    def exit(self):
+        print(self.letter1.get(), self.letter2.get(), self.letter3.get())
+        self.grandparent.deiconify()
+        self.destroy()
 
 class tutorial_page(tk.Toplevel):
     def __init__(self, parent):
@@ -409,7 +456,6 @@ class scoreboard_page(tk.Toplevel):
         for key in player_score_list:
             test = f"{key} {key} {player_dict[key]}"
             self.score_display.insert("", "end", values=test)
-
 
         self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
         self.back_button.grid(row=1, padx=10, pady=10)
