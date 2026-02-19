@@ -265,7 +265,7 @@ class playable_game(tk.Toplevel):
 
     def game_exit(self):
         if self.game_type == "Yes_AI":
-            score_confirmation(self, self.parent)
+            score_confirmation(self, self.parent, self.cross_score, self.tie_score, self.circles_score)
         else:
             self.parent.deiconify()
         self.destroy()
@@ -315,10 +315,14 @@ class playable_game(tk.Toplevel):
 
 
 class score_confirmation(tk.Toplevel):
-    def __init__(self, parent, grandparent):
+    def __init__(self, parent, grandparent, cross, tie, circle):
             super().__init__(grandparent)
             self.parent = parent
             self.grandparent = grandparent
+            self.cross = cross
+            self.tie = tie
+            self.circle = circle
+
             self.title("Save Score Prompt")
             self.geometry("330x265")
             self.resizable(False, False)
@@ -329,7 +333,9 @@ class score_confirmation(tk.Toplevel):
             self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=30, pady=30)
             self.widget_frame.pack()
 
-            self.score_title = tk.Label(self.widget_frame, text=f"Score: 9999999", background="#f0eaf3", font=('Segoe Script', 15), padx=20, pady=5, width=200)
+            self.test = self.cross.get() - self.circle.get()
+
+            self.score_title = tk.Label(self.widget_frame, text=f"Score: {self.test}", background="#f0eaf3", font=('Segoe Script', 15), padx=20, pady=5, width=200)
             self.score_title.pack()
 
             self.insert_name = tk.Label(self.widget_frame, text="Please Insert User:", background="#f0eaf3", font=('Segoe Script', 10), padx=20, pady=5, width=200)
@@ -349,7 +355,13 @@ class score_confirmation(tk.Toplevel):
             self.confirm_button.pack(padx=10, pady=10)
 
     def exit(self):
+        global save_file_path
+
+        with open(save_file_path, "w") as file:
+            file.write()
+
         print(self.letter1.get(), self.letter2.get(), self.letter3.get())
+        print(self.test)
         self.grandparent.deiconify()
         self.destroy()
 
