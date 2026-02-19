@@ -3,6 +3,8 @@ from tkinter import ttk
 
 import random
 
+save_file_path = "score_board.txt"
+
 class styling(ttk.Style):
     def __init__(self, parent):
         super().__init__(parent)
@@ -138,6 +140,7 @@ class styling(ttk.Style):
                        )
         self.configure("Treeview",
                        background="#f0eaf3",
+                       fieldbackground="#f0eaf3",
                        bordercolor="#f0eaf3",
                        borderwidth=1,
                        font=("Segoe Script", 8),
@@ -370,20 +373,43 @@ class scoreboard_page(tk.Toplevel):
         self.score_display.column("Name", minwidth=80, width=80, anchor="w")
         self.score_display.column("Score", minwidth=210, width=210, anchor="w")
 
-        sample = [
-            ("1ST", "AAA", "100000000"),
-            ("2ND", "AAA", "20"),
-            ("3RD", "AAA", "12"),
-            ("4TH", "AAA", "11"),
-            ("5TH", "AAA", "11"),
-            ("6TH", "AAA", "10"),
-            ("7TH", "AAA", "5"),
-            ("8TH", "AAA", "3"),
-            ("9TH", "AAA", "2"),
-            ("10TH", "AAA", "1")
-            ]
-        for record in sample:
-            self.score_display.insert("", "end", values=record)
+        player_dict = {}
+
+        with open(save_file_path, "r") as file:
+            for line in file.readlines():
+                print(f"Line Split: {line.split()}")
+                # Automatically assigns values to the vars in list
+                value, key = line.split()
+                print(value, key)
+                player_dict[key] = value
+
+        player_score_list = []
+
+        for value in player_dict:
+            player_score_list.append(value)
+
+        player_score_list.sort()
+
+        placings = [
+            "#1st",
+            "#2nd",
+            "#3rd",
+            "#4th",
+            "#5th",
+            "#6th",
+            "#7th",
+            "#8th",
+            "#9th",
+            "#10th"
+        ]
+
+        for i in range(10):
+            print(placings[i])
+
+        for key in player_score_list:
+            test = f"{key} {key} {player_dict[key]}"
+            self.score_display.insert("", "end", values=test)
+
 
         self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
         self.back_button.grid(row=1, padx=10, pady=10)
