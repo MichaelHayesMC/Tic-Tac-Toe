@@ -357,11 +357,9 @@ class score_confirmation(tk.Toplevel):
     def exit(self):
         global save_file_path
 
-        with open(save_file_path, "w") as file:
-            file.write()
+        with open(save_file_path, "a") as file:
+            file.write(f"{self.test} {self.letter1.get() + self.letter2.get() + self.letter3.get()}\n")
 
-        print(self.letter1.get(), self.letter2.get(), self.letter3.get())
-        print(self.test)
         self.grandparent.deiconify()
         self.destroy()
 
@@ -464,6 +462,12 @@ class scoreboard_page(tk.Toplevel):
 
         for i in range(10):
             print(placings[i])
+
+        # listt_ = []
+
+        # for placing in placings:
+        #     listt_.append(placing)
+        #     self.score_display.insert("", "end", values=listt_)
 
         for key in player_score_list:
             test = f"{key} {key} {player_dict[key]}"
