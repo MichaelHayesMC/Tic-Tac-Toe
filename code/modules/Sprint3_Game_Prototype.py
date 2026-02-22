@@ -437,15 +437,12 @@ class scoreboard_page(tk.Toplevel):
                 print(f"Line Split: {line.split()}")
                 # Automatically assigns values to the vars in list
                 value, key = line.split()
-                print(value, key)
-                player_dict[key] = value
+                player_dict[int(value)] = key
 
         player_score_list = []
 
         for value in player_dict:
-            player_score_list.append(value)
-
-        player_score_list.sort()
+            player_score_list.append((value))
 
         placings = [
             "#1st",
@@ -460,8 +457,9 @@ class scoreboard_page(tk.Toplevel):
             "#10th"
         ]
 
-        for i in range(10):
-            print(placings[i])
+        # for i in range(10):
+        #     placings[i]
+        #     player_score_list[i]
 
         # listt_ = []
 
@@ -469,8 +467,11 @@ class scoreboard_page(tk.Toplevel):
         #     listt_.append(placing)
         #     self.score_display.insert("", "end", values=listt_)
 
+        print(player_score_list)
+        player_score_list.sort(reverse=True)
+
         for key in player_score_list:
-            test = f"{key} {key} {player_dict[key]}"
+            test = f"{player_dict[key]} {player_dict[key]} {key}"
             self.score_display.insert("", "end", values=test)
 
         self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
