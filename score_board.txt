@@ -5,3 +5,6 @@
 4 TIE
 1 BOB
 4 JEB
+1 ONE
+20 TWO
+30 TEE

@@ -470,9 +470,12 @@ class scoreboard_page(tk.Toplevel):
         print(player_score_list)
         player_score_list.sort(reverse=True)
 
+        oop = 0
+
         for key in player_score_list:
-            test = f"{player_dict[key]} {player_dict[key]} {key}"
+            test = f"{placings[oop]} {player_dict[key]} {key}"
             self.score_display.insert("", "end", values=test)
+            oop += 1
 
         self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
         self.back_button.grid(row=1, padx=10, pady=10)
