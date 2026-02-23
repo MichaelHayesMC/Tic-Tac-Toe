@@ -332,9 +332,9 @@ class score_confirmation(tk.Toplevel):
             self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=30, pady=30)
             self.widget_frame.pack()
 
-            self.test = self.cross.get() - self.circle.get()
+            self.score_difference = self.cross.get() - self.circle.get()
 
-            self.score_title = tk.Label(self.widget_frame, text=f"Score: {self.test}", background="#f0eaf3", font=('Segoe Script', 15), padx=20, pady=5, width=200)
+            self.score_title = tk.Label(self.widget_frame, text=f"Score: {self.score_difference}", background="#f0eaf3", font=('Segoe Script', 15), padx=20, pady=5, width=200)
             self.score_title.pack()
 
             self.insert_name = tk.Label(self.widget_frame, text="Please Insert User:", background="#f0eaf3", font=('Segoe Script', 10), padx=20, pady=5, width=200)
@@ -349,18 +349,30 @@ class score_confirmation(tk.Toplevel):
             self.letter2.grid(column=1, row=1, sticky="")
             self.letter3 = ttk.Entry(self.insert_widget_frame, width=2, font=('Segoe Script', 20), justify="center")
             self.letter3.grid(column=2, row=1, sticky="w")
+
+            self.letter1.bind("<KeyRelease>", lambda e: self.entry_limit(self.letter1))
+            self.letter2.bind("<KeyRelease>", lambda e: self.entry_limit(self.letter2))
+            self.letter3.bind("<KeyRelease>", lambda e: self.entry_limit(self.letter3))
             
             self.confirm_button = ttk.Button(self.main_frame, text="Confirm", style="Back.TButton", command=self.exit)
             self.confirm_button.pack(padx=10, pady=10)
+    
+    def entry_limit(self, widget):
+        widget_func = widget.get()
+        if len(widget_func) > 1:
+            print("Limit Exceeded")
+            widget.delete(1, tk.END)
 
     def exit(self):
-        global save_file_path
+        user_name = (self.letter1.get() + self.letter2.get() + self.letter3.get()).upper()
+        if len(user_name) == 3:
+            global save_file_path
 
-        with open(save_file_path, "a") as file:
-            file.write(f"{self.test} {self.letter1.get() + self.letter2.get() + self.letter3.get()}\n")
+            with open(save_file_path, "a") as file:
+                file.write(f"{self.score_difference} {user_name}\n")
 
-        self.grandparent.deiconify()
-        self.destroy()
+            self.grandparent.deiconify()
+            self.destroy()
 
 class tutorial_page(tk.Toplevel):
     def __init__(self, parent):
@@ -625,9 +637,6 @@ def game_set():
     o_list = []
     activate_ai = False
     possible_moves = [1,2,3,4,5,6,7,8,9]
-
-def entry_limit():
-    pass
 
 # Creates loop for tkinter interface
 if __name__ == "__main__":
