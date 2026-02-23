@@ -364,10 +364,10 @@ class score_confirmation(tk.Toplevel):
             widget.delete(1, tk.END)
 
     def exit(self):
+        global save_file_path
         user_name = (self.letter1.get() + self.letter2.get() + self.letter3.get()).upper()
-        if len(user_name) == 3:
-            global save_file_path
 
+        if len(user_name) == 3:
             with open(save_file_path, "a") as file:
                 file.write(f"{self.score_difference} {user_name}\n")
 
