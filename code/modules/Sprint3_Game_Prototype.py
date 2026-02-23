@@ -313,7 +313,6 @@ class playable_game(tk.Toplevel):
             button = button_class(id, record_list, parent, self.game_type)
             button.identification(self.game_frame)
 
-
 class score_confirmation(tk.Toplevel):
     def __init__(self, parent, grandparent, cross, tie, circle):
             super().__init__(grandparent)
@@ -430,20 +429,8 @@ class scoreboard_page(tk.Toplevel):
         self.score_display.column("Name", minwidth=80, width=80, anchor="w")
         self.score_display.column("Score", minwidth=210, width=210, anchor="w")
 
-        player_dict = {}
-
-        with open(save_file_path, "r") as file:
-            for line in file.readlines():
-                print(f"Line Split: {line.split()}")
-                # Automatically assigns values to the vars in list
-                value, key = line.split()
-                player_dict[int(value)] = key
-
-        player_score_list = []
-
-        for value in player_dict:
-            player_score_list.append((value))
-
+        player_dir = []
+        line_max = 0
         placings = [
             "#1st",
             "#2nd",
@@ -457,25 +444,20 @@ class scoreboard_page(tk.Toplevel):
             "#10th"
         ]
 
-        # for i in range(10):
-        #     placings[i]
-        #     player_score_list[i]
+        with open(save_file_path, "r") as file:
+            for line in file.readlines():
+                print(f"Line Split: {line.split()}")
+                # Automatically assigns values to the vars in list
+                value, key = line.split()
+                player_dir.append([int(value), key])
 
-        # listt_ = []
+        sorted_player_dir = sorted(player_dir, reverse=True)
 
-        # for placing in placings:
-        #     listt_.append(placing)
-        #     self.score_display.insert("", "end", values=listt_)
-
-        print(player_score_list)
-        player_score_list.sort(reverse=True)
-
-        oop = 0
-
-        for key in player_score_list:
-            test = f"{placings[oop]} {player_dict[key]} {key}"
-            self.score_display.insert("", "end", values=test)
-            oop += 1
+        for player_val in sorted_player_dir:
+            if line_max <= 9:
+                player_data = f"{placings[line_max]} {player_val[1]} {player_val[0]}"
+                self.score_display.insert("", "end", values=player_data)
+                line_max += 1
 
         self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
         self.back_button.grid(row=1, padx=10, pady=10)
@@ -643,6 +625,9 @@ def game_set():
     o_list = []
     activate_ai = False
     possible_moves = [1,2,3,4,5,6,7,8,9]
+
+def entry_limit():
+    pass
 
 # Creates loop for tkinter interface
 if __name__ == "__main__":
