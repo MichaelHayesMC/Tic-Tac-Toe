@@ -259,7 +259,6 @@ class playable_game(tk.Toplevel):
         game_set()
 
     def exit(self):
-        print(self.parent)
         self.parent.deiconify()
         self.destroy()
 
@@ -360,7 +359,6 @@ class score_confirmation(tk.Toplevel):
     def entry_limit(self, widget):
         widget_func = widget.get()
         if len(widget_func) > 1:
-            print("Limit Exceeded")
             widget.delete(1, tk.END)
 
     def exit(self):
@@ -458,7 +456,6 @@ class scoreboard_page(tk.Toplevel):
 
         with open(save_file_path, "r") as file:
             for line in file.readlines():
-                print(f"Line Split: {line.split()}")
                 # Automatically assigns values to the vars in list
                 value, key = line.split()
                 player_dir.append([int(value), key])
@@ -543,8 +540,7 @@ class button_class:
 
         # Threshold for all buttons to be occupied till able to reset game
         if disable_count == 9 and game_won == False:
-                    print("huh")
-                    self.parent.after(2000, lambda: self.parent.score_add("tie"))
+            self.parent.after(2000, lambda: self.parent.score_add("tie"))
 
     def button_func_ai(self):
         global possible_moves
@@ -578,8 +574,7 @@ class button_class:
 
         # Threshold for all buttons to be occupied till able to reset game
         if disable_count == 9 and game_won == False:
-                    print("huh")
-                    self.parent.after(2000, lambda: self.parent.score_add("tie"))
+            self.parent.after(2000, lambda: self.parent.score_add("tie"))
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
