@@ -624,6 +624,8 @@ def game_set():
     global activate_ai
     global possible_moves
     global game_won
+    global game_start
+    game_start = False
     game_won = False
     disable_count = 0
     crosses = True
