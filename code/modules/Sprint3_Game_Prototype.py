@@ -486,17 +486,6 @@ class button_class:
         self.parent = parent
         self.game_type = game_type
 
-        self.win_list = [
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9],
-            [1, 4, 7],
-            [2, 5, 8],
-            [3, 6, 9],
-            [1, 5, 9],
-            [3, 5, 7]
-        ]
-
     # Allocates each button to create the 3x3 grid in game_frame widget
     def grid_allocation(self):
         game_row = 0
@@ -557,6 +546,7 @@ class button_class:
         global x_list
         global o_list
         global game_won
+        global win_list
         looking = True
         
         self.parent.back_button.config(state=tk.DISABLED)
@@ -571,43 +561,43 @@ class button_class:
         
         self.win_cond()
 
-        # First AI Iteration
         if possible_moves != [] and game_won == False:
-            while looking:
-                if len(x_list) == 2:
-                    for win_scenario in self.win_list:
-                        if len(set(x_list) & set(win_scenario)) == 2:
-                            test = (set(x_list) ^ set(win_scenario)).pop()
+                for win_scenario in win_list:
+                    if len(set(x_list) & set(win_scenario)) >= 2:
+                        test = (set(x_list) ^ set(win_scenario)).pop()
+                        if test in possible_moves:
+                            win_list.remove(win_scenario)
+                            print(f"WIN LIST:{win_list}")
                             self.record_list[test].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
                             o_list.append(test)
                             o_list.sort()
                             possible_moves.remove(test)
-                            print(possible_moves.remove(test))
                             looking = False
                             disable_count += 1
                             self.win_cond()
-                            print("HA")
+                            break
+                        else:
+                            self.circles_rand()
                 else:
-                    a = random.randrange(1,9)
-                    for move in possible_moves:
-                        if a == move:
-                            self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
-                            o_list.append(a)
-                            o_list.sort()
-                            possible_moves.remove(move)
-                            looking = False
-                            disable_count += 1
-                            self.win_cond()
-                            print("AH")
-
-        # Second AI Iteration
-        # print(len(x_list))
-        # for win_scenario in self.win_list:
-        #     print(win_scenario)
+                    self.circles_rand()
 
         # Threshold for all buttons to be occupied till able to reset game
         if disable_count == 9 and game_won == False:
             self.parent.after(2000, lambda: self.parent.score_add("tie"))
+
+    def circles_rand(self):
+        while looking:
+            a = random.randrange(1,9)
+            for move in possible_moves:
+                if a == move:
+                    self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                    o_list.append(a)
+                    o_list.sort()
+                    print(move)
+                    possible_moves.remove(move)
+                    looking = False
+                    disable_count += 1
+                    self.win_cond()
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
@@ -615,10 +605,11 @@ class button_class:
         global o_list
         global disable_count
         global game_won
+        global win_list
 
         # Convert the following if statements dependent on button type to a function
         if self.button.winfo_exists():
-            for win_scenario in self.win_list:
+            for win_scenario in win_list:
                 if len(set(x_list).intersection(set(win_scenario))) == 3:
                     game_won = True
                     for button in set(x_list).intersection(set(win_scenario)):
@@ -627,7 +618,7 @@ class button_class:
                             self.record_list[button].configure(state=tk.DISABLED)
                     self.parent.after(2000, lambda: self.parent.score_add("cross"))
 
-            for win_scenario in self.win_list:
+            for win_scenario in win_list:
                 if len(set(o_list).intersection(set(win_scenario))) == 3:
                     game_won = True
                     for button in set(o_list).intersection(set(win_scenario)):
@@ -657,6 +648,17 @@ def game_set():
     global activate_ai
     global possible_moves
     global game_won
+    global win_list
+    win_list = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 6, 9],
+            [1, 5, 9],
+            [3, 5, 7]
+        ]
     game_won = False
     disable_count = 0
     crosses = True
