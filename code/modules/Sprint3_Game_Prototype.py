@@ -277,6 +277,9 @@ class playable_game(tk.Toplevel):
 
     # Restart game initiation
     def game_start(self):
+        self.back_button.config(state=tk.DISABLED)
+        self.restart_button.config(state=tk.DISABLED)
+
         # Looks for every game_frame child then deletes them to therefore be replaced
         for button in self.game_frame.winfo_children():
             button.destroy()
@@ -295,6 +298,9 @@ class playable_game(tk.Toplevel):
 
         self.game_start()
         self.score_update()
+
+        self.back_button.config(state=tk.NORMAL)
+        self.restart_button.config(state=tk.NORMAL)
 
     def game_score_reset(self):
         self.cross_score.set(0)
@@ -523,6 +529,9 @@ class button_class:
         global x_list
         global o_list
 
+        self.parent.back_button.config(state=tk.DISABLED)
+        self.parent.restart_button.config(state=tk.DISABLED)
+
         if crosses == True:
             self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
             x_list.append(self.id)
@@ -550,6 +559,9 @@ class button_class:
         global game_won
         looking = True
         
+        self.parent.back_button.config(state=tk.DISABLED)
+        self.parent.restart_button.config(state=tk.DISABLED)
+
         disable_count += 1
 
         self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
@@ -624,8 +636,6 @@ def game_set():
     global activate_ai
     global possible_moves
     global game_won
-    global game_start
-    game_start = False
     game_won = False
     disable_count = 0
     crosses = True
