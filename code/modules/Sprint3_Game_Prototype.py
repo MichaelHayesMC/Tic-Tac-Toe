@@ -577,27 +577,34 @@ class button_class:
                             self.win_cond()
                             break
                         else:
-                            self.circles_rand()
+                            while looking:
+                                a = random.randrange(1,9)
+                                for move in possible_moves:
+                                    if a == move:
+                                        self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                                        o_list.append(a)
+                                        o_list.sort()
+                                        possible_moves.remove(move)
+                                        looking = False
+                                        disable_count += 1
+                                        self.win_cond()
                 else:
-                    self.circles_rand()
+                    while looking:
+                        a = random.randrange(1,9)
+                        for move in possible_moves:
+                            if a == move:
+                                self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                                o_list.append(a)
+                                o_list.sort()
+                                print(move)
+                                possible_moves.remove(move)
+                                looking = False
+                                disable_count += 1
+                                self.win_cond()
 
         # Threshold for all buttons to be occupied till able to reset game
         if disable_count == 9 and game_won == False:
             self.parent.after(2000, lambda: self.parent.score_add("tie"))
-
-    def circles_rand(self):
-        while looking:
-            a = random.randrange(1,9)
-            for move in possible_moves:
-                if a == move:
-                    self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
-                    o_list.append(a)
-                    o_list.sort()
-                    print(move)
-                    possible_moves.remove(move)
-                    looking = False
-                    disable_count += 1
-                    self.win_cond()
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
