@@ -571,18 +571,39 @@ class button_class:
         
         self.win_cond()
 
+        # First AI Iteration
         if possible_moves != [] and game_won == False:
             while looking:
-                a = random.randrange(1,9)
-                for move in possible_moves:
-                    if a == move:
-                        self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
-                        o_list.append(a)
-                        o_list.sort()
-                        possible_moves.remove(move)
-                        looking = False
-                        disable_count += 1
-                        self.win_cond()
+                if len(x_list) == 2:
+                    for win_scenario in self.win_list:
+                        if len(set(x_list) & set(win_scenario)) == 2:
+                            test = (set(x_list) ^ set(win_scenario)).pop()
+                            self.record_list[test].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                            o_list.append(test)
+                            o_list.sort()
+                            possible_moves.remove(test)
+                            print(possible_moves.remove(test))
+                            looking = False
+                            disable_count += 1
+                            self.win_cond()
+                            print("HA")
+                else:
+                    a = random.randrange(1,9)
+                    for move in possible_moves:
+                        if a == move:
+                            self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                            o_list.append(a)
+                            o_list.sort()
+                            possible_moves.remove(move)
+                            looking = False
+                            disable_count += 1
+                            self.win_cond()
+                            print("AH")
+
+        # Second AI Iteration
+        # print(len(x_list))
+        # for win_scenario in self.win_list:
+        #     print(win_scenario)
 
         # Threshold for all buttons to be occupied till able to reset game
         if disable_count == 9 and game_won == False:
