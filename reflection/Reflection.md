@@ -33,13 +33,13 @@ For my first design after the finalisation of stakeholder feedback, I was able t
 
 <img src="../planning\Sprint2_Design\Flowchart\Flowchart_Sprint2.png" width="650"/>
 
-Text
+For my second design I had created many more tkinter windows were their own functionality. Therefore I had to create different modules of for all the unique tkinter windows that are for: (tutorials, scoreboard, pve and pvp modes). Therefore the flowchart would need to be expanded to explain the full functionality of how to access the different widgets.
 
 ### Sprint 3 Programme Flowchart
 
 <img src="../planning\Sprint3_Design\Flowchart\Flowchart_Sprint3.png" width="650"/>
 
-Text
+For my final design flowchart, I added the description of how my more comprehensive ai would work in terms of the player's moves trying to prevent the player from winning. This all falls under the grouping of the playable game area depicted under pve characteristics and requirements.
 
 ## Test Cases
 
