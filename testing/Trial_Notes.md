@@ -52,7 +52,7 @@ __Sprint Two Design__
 <img src="../assets\Markdown_images\Game_Design\Sprint2_Game.PNG" width="650"/>
 
 __Sprint Three Design__  
-<img src="../" alt="Sprint 3 Outcome" width="650"/>
+<img src="../assets\Markdown_images\Game_Design\Sprint3_Game.png" alt="Sprint 3 Outcome" width="650"/>
 
 Over the course of my trialling with my stakeholders for my sprint two design, I have received some constructive criticism which allowed me to make improvements for the previous second prototype design. This information is gathered via a forum which will therefore give me the feedback I need to improve my design to fit the needs of my audience.
 
@@ -64,9 +64,9 @@ After I had finished my 2nd sprint, my first stakeholder trialled my programme a
 
 * __Integration__
 
-<img src="../" width="650"/>
+<img src="../assets\Markdown_images\Game_Design\Sprint3_Game.png" width="650"/>
 
->(How I have fufilled the stakeholder request)
+> I have successfully managed to implement a working high score system that records player data inside a txt file and therefore reads of that txt file for long term replayability. It will sort the players scores on the right most column with the player rank on the left most hand side and their name limited up to 3 characters in the middle.
 
 ### 2️⃣ Stakeholder Two (Astyn)
 
@@ -76,20 +76,20 @@ My second stakeholder has requested that in terms of the PVE functionality, the 
 
 * __Integration__
 
-<img src="../" alt="Integration - Stakeholder two" width="650"/>
+<img src="../assets\Markdown_images\Game_Design\Sprint3_Game.png" alt="Integration - Stakeholder two" width="650"/>
 
->My second stakeholder has requested that I 
+> My second stakeholder had requested that I make the ai system more complex and able to understand more complex patterns from the player. I have successfully done this through the ai able to analyse patterns that are close to the winning condition via a list therefore blocking the player from making a move to win easily.
 
 ### 3️⃣ Stakeholder Three (Zane)
 
 * __Request(s)__
 
-My third stakeholder had requested that I change the fluedity of my programme. In order to achieve this I will in turn try to make the functionality of wati timers more dynamic due to it being argued that the wait time between animation intervals was a bit long.
+My third stakeholder had requested that I change the fluidity of my programme. In order to achieve this I will in turn try to make the functionality of wait timers more dynamic due to it being argued that the wait time between animation intervals was a bit long.
 
-I will incorporate this feedback since having an issue that is repeatidly a nuisance can make the user experience of my digital outcome unpleasant therefore against my intentions of my end-user considerations.
+I will incorporate this feedback since having an issue that is repeatedly a nuisance can make the user experience of my digital outcome unpleasant therefore against my intentions of my end-user considerations.
 
 * __Integration__
 
-<img src="../assets\markdown-images\Trial_Notes_Images\Integration\Sprint_3\Sprint3_Integration_Astyn.png" alt="Integration - Stakeholder three" width="650"/>
+<img src="../assets\Markdown_images\Game_Design\Sprint3_Game.png" alt="Integration - Stakeholder three" width="650"/>
 
->(How I have fufilled the stakeholder request)
+> In terms of my third stakeholder requesting that I make the programme more dynamic in terms of its animations, I have successfully added wait functions for the different buttons that play out different animations when player has won, lost or tied with their opposition. This can be shown through the glowing green highlights behind the buttons to demonstrate who had won.

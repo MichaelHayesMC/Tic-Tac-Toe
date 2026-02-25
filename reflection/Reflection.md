@@ -6,19 +6,19 @@ Documentation regarding tools that were used for the creation and process of my 
 
 ### Sprint 1
 
-<img src="../assets\Markdown_images\Sprint1_Trello_Records.png" alt="Trello Board Sprint 1 Completion" width="650"/>
+<img src="../assets\Markdown_images\Trello_Records\Sprint1_Trello_Records.png" alt="Trello Board Sprint 1 Completion" width="650"/>
 
 As presented above I have been able to fulfil the goals that I had set for myself for my first sprint Requirements. In the first sprint I wanted to make a working prototype that would allow users to test the basic functionality of a generic tic tac toe game. Therefore by recording and managing my schedule for this sprint I was able to fulfil these requirements in an orderly fashion alongside accompanied comments inside the descriptive boxes.
 
 ### Sprint 2
 
-<img src="../assets\Markdown_images\Sprint2_Trello_Records.PNG" alt="Trello Board Sprint 2 Completion" width="650"/>
+<img src="../assets\Markdown_images\Trello_Records\Sprint2_Trello_Records.PNG" alt="Trello Board Sprint 2 Completion" width="650"/>
 
 Presented by the picture above, I was able to fufil the goals that I had set myself for this sprint. I continued to use the organising method of separating different sprint categories making it easier to keep track of which function is for which sprint.
 
 ### Sprint 3
 
-<img src="../" alt="Trello Board Sprint 3 Completion" width="650"/>
+<img src="../assets\Markdown_images\Trello_Records\Sprint3_Trello_Records.png" alt="Trello Board Sprint 3 Completion" width="650"/>
 
 Text
 
@@ -31,13 +31,13 @@ For my first design after the finalisation of stakeholder feedback, I was able t
 
 ### Sprint 2 Programme Flowchart
 
-<img src="image directory" width="650"/>
+<img src="../planning\Sprint2_Design\Flowchart\Flowchart_Sprint2.png" width="650"/>
 
 Text
 
 ### Sprint 3 Programme Flowchart
 
-<img src="image directory" width="650"/>
+<img src="../planning\Sprint3_Design\Flowchart\Flowchart_Sprint3.png" width="650"/>
 
 Text
 
