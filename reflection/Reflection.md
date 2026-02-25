@@ -20,7 +20,7 @@ Presented by the picture above, I was able to fufil the goals that I had set mys
 
 <img src="../assets\Markdown_images\Trello_Records\Sprint3_Trello_Records.png" alt="Trello Board Sprint 3 Completion" width="650"/>
 
-Text
+For my final design, the planning that I intended to complete over the week had been successfully completed and therefore finishing my entire digital outcome for this term. I was able to complete all the recorded stakeholder feedback and successfully complete all tasks on time with no backlog.
 
 ## Flowcharts
 ### Prototype Wireframe Flowchart -> Sprint 1 Programme Flowchart
