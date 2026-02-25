@@ -19,7 +19,6 @@ class styling(ttk.Style):
                         padding=yippe,
                         background="#F8CECC",
                         relief="flat")
-
         self.map("Crosses.TButton", background=[("disabled", "#F8CECC")])
 
         self.configure('XWin.TButton',
@@ -28,7 +27,6 @@ class styling(ttk.Style):
                         padding=yippe,
                         background="#D5E8D4",
                         relief="flat")
-
         self.map("XWin.TButton", background=[("disabled", "#D5E8D4")])
 
         self.configure('Circles.TButton',
@@ -36,7 +34,6 @@ class styling(ttk.Style):
                         font=('Segoe UI Symbol', 50),
                         padding=yippe,
                         relief="flat")
-
         self.map("Circles.TButton", background=[("disabled", "#DAE8FC")])
 
         self.configure('OWin.TButton',
@@ -45,9 +42,7 @@ class styling(ttk.Style):
                         padding=yippe,
                         background="#D5E8D4",
                         relief="flat")
-
         self.map("OWin.TButton", background=[("disabled", "#D5E8D4")])
-
 
         self.configure('Idle.TButton',
                         foreground='Black',
@@ -62,8 +57,10 @@ class styling(ttk.Style):
                         relief="flat",
                         padding=[-10,5,-10,5]
                         )
-
-        self.map("Restart.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
+        self.map(
+            "Restart.TButton", 
+            background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")]
+            )
 
         self.configure("Back.TButton",
                         background="#FFE6CC",
@@ -71,8 +68,10 @@ class styling(ttk.Style):
                         relief="flat",
                         padding=[-10,5,-10,5]
                         )
-
-        self.map("Back.TButton", background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")] )
+        self.map(
+            "Back.TButton", 
+            background=[("pressed", "#E7CAAA"), ("active", "#F1CCA3")]
+            )
 
         self.configure("Cross_Score.TLabel",
                         background="#F8CECC",
@@ -95,8 +94,10 @@ class styling(ttk.Style):
                        relief="flat",
                        padding=[30, 170, 30, 170]
                        )
-        
-        self.map("PVP.TButton", background=[("pressed", "#D38480"), ("active", "#D3ADAC")])
+        self.map(
+            "PVP.TButton", 
+            background=[("pressed", "#D38480"), ("active", "#D3ADAC")]
+            )
         
         self.configure("PVE.TButton",
                 background=("#DAE8FC"),
@@ -104,8 +105,10 @@ class styling(ttk.Style):
                 relief="flat",
                 padding=[30, 85, 30, 85]
                 )
-        
-        self.map("PVE.TButton", background=[("pressed", "#8CABD6"), ("active", "#B5C0CE")])
+        self.map(
+            "PVE.TButton", 
+            background=[("pressed", "#8CABD6"), ("active", "#B5C0CE")]
+            )
 
         self.configure("Scoreboard.TButton",
                 background=("#FFF2CC"),
@@ -113,16 +116,20 @@ class styling(ttk.Style):
                 relief="flat",
                 padding=[30, 48, 30, 48]
                 )
-        
-        self.map("Scoreboard.TButton", background=[("pressed", "#D6C88C"), ("active", "#CEC8B5")])
+        self.map(
+            "Scoreboard.TButton", 
+            background=[("pressed", "#D6C88C"), ("active", "#CEC8B5")]
+            )
 
         self.configure("Tutorial.TButton",
                 background=("#D5E8D4"),
                 font=("Segoe Script", 10),
                 relief="flat",
                 )
-        
-        self.map("Tutorial.TButton", background=[("pressed", "#8EAF8C"), ("active", "#99B697")])
+        self.map(
+            "Tutorial.TButton", 
+            background=[("pressed", "#8EAF8C"), ("active", "#99B697")]
+            )
         
         self.configure("Title.TLabel",
                        background="#f0eaf3",
@@ -154,14 +161,12 @@ class main_menu(tk.Tk):
         self.geometry("545x395")
         self.resizable(False, False)
 
-        style = styling(self)
-
         main_frame = tk.Frame(
             self,
             background=("#E1D5E7"),
             padx=10,
             pady=10
-        )
+            )
         main_frame.pack()
 
         title = ttk.Label(
@@ -172,7 +177,12 @@ class main_menu(tk.Tk):
             )
         title.grid(row=0, column=0)
 
-        widgets_frame = tk.Frame(main_frame, padx=3, pady=3, background="#f0eaf3")
+        widgets_frame = tk.Frame(
+            main_frame, 
+            padx=3, 
+            pady=3, 
+            background="#f0eaf3"
+            )
         widgets_frame.grid(row=0, column=1)
 
         pvp_button = ttk.Button(
@@ -235,24 +245,54 @@ class playable_game(tk.Toplevel):
         self.main_frame.pack()
 
         # Need .get() for score to get the value rather than the label widget data itself
-        self.cross_score_board = ttk.Label(self.main_frame, textvariable=self.cross_combined, style="Cross_Score.TLabel", padding=11)
+        self.cross_score_board = ttk.Label(
+            self.main_frame, 
+            textvariable=self.cross_combined, 
+            style="Cross_Score.TLabel", 
+            padding=11
+            )
         self.cross_score_board.grid(row=0, column=0)
 
-        self.tie_score_board = ttk.Label(self.main_frame, textvariable=self.tie_combined, style="Tie_Score.TLabel", padding=11)
+        self.tie_score_board = ttk.Label(
+            self.main_frame, 
+            textvariable=self.tie_combined, 
+            style="Tie_Score.TLabel", 
+            padding=11
+            )
         self.tie_score_board.grid(row=0, column=1)
 
-        self.circles_score_board = ttk.Label(self.main_frame, textvariable=self.circles_combined, style="Circles_Score.TLabel", padding=11)
+        self.circles_score_board = ttk.Label(
+            self.main_frame, 
+            textvariable=self.circles_combined, 
+            style="Circles_Score.TLabel", 
+            padding=11
+            )
         self.circles_score_board.grid(row=0, column=2)
 
-        self.game_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=5, pady=5)
+        self.game_frame = tk.Frame(
+            self.main_frame, 
+            background="#f0eaf3", 
+            padx=5, 
+            pady=5
+            )
         self.game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=10)
 
         self.button_grid(self.game_frame, self)
 
-        self.restart_button = ttk.Button(self.main_frame, text="Restart", command=self.game_score_reset, style="Restart.TButton")
+        self.restart_button = ttk.Button(
+            self.main_frame, 
+            text="Restart", 
+            command=self.game_score_reset, 
+            style="Restart.TButton"
+            )
         self.restart_button.grid(row=2, column=0, columnspan=2)
 
-        self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=self.game_exit)
+        self.back_button = ttk.Button(
+            self.main_frame, 
+            text="Back", 
+            style="Back.TButton", 
+            command=self.game_exit
+            )
         self.back_button.grid(row=2, column=1, columnspan=2)
 
         self.score_update()
@@ -264,16 +304,28 @@ class playable_game(tk.Toplevel):
 
     def game_exit(self):
         if self.game_type == "Yes_AI":
-            score_confirmation(self, self.parent, self.cross_score, self.tie_score, self.circles_score)
+            score_confirmation(
+                self, 
+                self.parent, 
+                self.cross_score, 
+                self.tie_score, 
+                self.circles_score
+                )
         else:
             self.parent.deiconify()
         self.destroy()
     
-    # Updates score with the string and integer tkinter variables with auto updating properties
+    # Updates score with the string and integer tkinter variables (Label: Score) with auto updating properties
     def score_update(self):
-        self.cross_combined.set(f"{self.cross_score_label.get()}{self.cross_score.get()}")
-        self.tie_combined.set(f"{self.tie_score_label.get()}{self.tie_score.get()}")
-        self.circles_combined.set(f"{self.circles_score_label.get()}{self.circles_score.get()}")
+        self.cross_combined.set(
+            f"{self.cross_score_label.get()}{self.cross_score.get()}"
+            )
+        self.tie_combined.set(
+            f"{self.tie_score_label.get()}{self.tie_score.get()}"
+            )
+        self.circles_combined.set(
+            f"{self.circles_score_label.get()}{self.circles_score.get()}"
+            )
 
     # Restart game initiation
     def game_start(self):
@@ -334,32 +386,75 @@ class score_confirmation(tk.Toplevel):
             self.main_frame = tk.Frame(self, background="#E1D5E7", padx=10, pady=10)
             self.main_frame.pack()
 
-            self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=30, pady=30)
+            self.widget_frame = tk.Frame(
+                self.main_frame, 
+                background="#f0eaf3", 
+                padx=30, 
+                pady=30
+                )
             self.widget_frame.pack()
 
             self.score_difference = self.cross.get() - self.circle.get()
 
-            self.score_title = tk.Label(self.widget_frame, text=f"Score: {self.score_difference}", background="#f0eaf3", font=('Segoe Script', 15), padx=20, pady=5, width=200)
+            self.score_title = tk.Label(
+                self.widget_frame, 
+                text=f"Score: {self.score_difference}", 
+                background="#f0eaf3", 
+                font=('Segoe Script', 15), 
+                padx=20, 
+                pady=5, 
+                width=200
+                )
             self.score_title.pack()
 
-            self.insert_name = tk.Label(self.widget_frame, text="Please Insert User:", background="#f0eaf3", font=('Segoe Script', 10), padx=20, pady=5, width=200)
+            self.insert_name = tk.Label(
+                self.widget_frame, 
+                text="Please Insert User:", 
+                background="#f0eaf3", 
+                font=('Segoe Script', 10), 
+                padx=20, 
+                pady=5, 
+                width=200
+                )
             self.insert_name.pack()
 
             self.insert_widget_frame = tk.Frame(self.widget_frame)
             self.insert_widget_frame.pack()
 
-            self.letter1 = ttk.Entry(self.insert_widget_frame, width=2, font=('Segoe Script', 20), justify="center")
+            self.letter1 = ttk.Entry(
+                self.insert_widget_frame, 
+                width=2, 
+                font=('Segoe Script', 20), 
+                justify="center"
+                )
             self.letter1.grid(column=0, row=1, sticky="e")
-            self.letter2 = ttk.Entry(self.insert_widget_frame, width=2, font=('Segoe Script', 20), justify="center")
+
+            self.letter2 = ttk.Entry(
+                self.insert_widget_frame, 
+                width=2, 
+                font=('Segoe Script', 20), 
+                justify="center"
+                )
             self.letter2.grid(column=1, row=1, sticky="")
-            self.letter3 = ttk.Entry(self.insert_widget_frame, width=2, font=('Segoe Script', 20), justify="center")
+
+            self.letter3 = ttk.Entry(
+                self.insert_widget_frame, 
+                width=2, 
+                font=('Segoe Script', 20), 
+                justify="center"
+                )
             self.letter3.grid(column=2, row=1, sticky="w")
 
             self.letter1.bind("<KeyRelease>", lambda e: self.entry_limit(self.letter1))
             self.letter2.bind("<KeyRelease>", lambda e: self.entry_limit(self.letter2))
             self.letter3.bind("<KeyRelease>", lambda e: self.entry_limit(self.letter3))
             
-            self.confirm_button = ttk.Button(self.main_frame, text="Confirm", style="Back.TButton", command=self.exit)
+            self.confirm_button = ttk.Button(
+                self.main_frame, 
+                text="Confirm", 
+                style="Back.TButton", 
+                command=self.exit
+                )
             self.confirm_button.pack(padx=10, pady=10)
     
     def entry_limit(self, widget):
@@ -369,7 +464,9 @@ class score_confirmation(tk.Toplevel):
 
     def exit(self):
         global save_file_path
-        user_name = (self.letter1.get() + self.letter2.get() + self.letter3.get()).upper()
+        user_name = (
+            self.letter1.get() + self.letter2.get() + self.letter3.get()
+            ).upper()
 
         if len(user_name) == 3:
             with open(save_file_path, "a") as file:
@@ -391,18 +488,31 @@ class tutorial_page(tk.Toplevel):
             self.main_frame = tk.Frame(self, background="#E1D5E7", padx=10, pady=10)
             self.main_frame.pack()
 
-            self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=5, pady=5)
+            self.widget_frame = tk.Frame(
+                self.main_frame, 
+                background="#f0eaf3", 
+                padx=5, 
+                pady=5
+                )
             self.widget_frame.grid(row=0)
 
-            self.rule_title = tk.Label(self.widget_frame, text="Rules:", background="#f0eaf3", font=('Segoe Script', 10))
+            self.rule_title = tk.Label(
+                self.widget_frame, 
+                text="Rules:", 
+                background="#f0eaf3", 
+                font=('Segoe Script', 10)
+                )
             self.rule_title.pack()
 
             self.rule_info = tk.Label(
                 self.widget_frame, 
                 text=(
                     "Tic-Tac-Toe is a two-player game played on a 3x3 grid. "
-                    "Players alternate placing 'X' or 'O' in empty squares, with the goal of being the first to get three of their marks in a row (horizontally, vertically, or diagonally). "
-                    "The first player (often 'X') goes first, and the game ends in a tie if all nine squares are filled without three-in-a-row. "
+                    "Players alternate placing 'X' or 'O' in empty squares, "
+                    "with the goal of being the first to get three of their marks in a row "
+                    "(horizontally, vertically, or diagonally). "
+                    "The first player (often 'X') goes first, and the game ends in a tie if "
+                    "all nine squares are filled without three-in-a-row. "
                     ),
                 wraplength=300,
                 justify="center",
@@ -411,7 +521,12 @@ class tutorial_page(tk.Toplevel):
             )
             self.rule_info.pack()
 
-            self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
+            self.back_button = ttk.Button(
+                self.main_frame, 
+                text="Back", 
+                style="Back.TButton", 
+                command=lambda:playable_game.exit(self)
+                )
             self.back_button.grid(row=1, padx=10, pady=10)
 
 class scoreboard_page(tk.Toplevel):
@@ -427,14 +542,30 @@ class scoreboard_page(tk.Toplevel):
         self.main_frame = tk.Frame(self, background="#E1D5E7", padx=10, pady=10)
         self.main_frame.pack()
 
-        self.widget_frame = tk.Frame(self.main_frame, background="#f0eaf3", padx=5, pady=5)
+        self.widget_frame = tk.Frame(
+            self.main_frame, 
+            background="#f0eaf3", 
+            padx=5, 
+            pady=5
+            )
         self.widget_frame.grid(row=0)
 
-        self.hscore_title = tk.Label(self.widget_frame, text="HIGH SCORES", background="#f0eaf3", font=('Segoe Script', 17), padx=7, pady=5)
+        self.hscore_title = tk.Label(
+            self.widget_frame, 
+            text="HIGH SCORES", 
+            background="#f0eaf3", 
+            font=('Segoe Script', 17), 
+            padx=7, 
+            pady=5
+            )
         self.hscore_title.grid(row=0, sticky="w")
 
         treeview_headers = ("Rank", "Name", "Score")
-        self.score_display = ttk.Treeview(self.widget_frame, columns=treeview_headers, show="headings")
+        self.score_display = ttk.Treeview(
+            self.widget_frame, 
+            columns=treeview_headers, 
+            show="headings"
+            )
         self.score_display.grid(row=1, padx=5, pady=5)
 
         self.score_display.heading("Rank", text="RANK", anchor="w")
@@ -474,7 +605,12 @@ class scoreboard_page(tk.Toplevel):
                 self.score_display.insert("", "end", values=player_data)
                 line_max += 1
 
-        self.back_button = ttk.Button(self.main_frame, text="Back", style="Back.TButton", command=lambda:playable_game.exit(self))
+        self.back_button = ttk.Button(
+            self.main_frame, 
+            text="Back", 
+            style="Back.TButton", 
+            command=lambda:playable_game.exit(self)
+            )
         self.back_button.grid(row=1, padx=10, pady=10)
 
 # The necessary blueprint to create a 3x3 grid with button widgets
@@ -509,7 +645,12 @@ class button_class:
         else:
             game_column = 0
         
-        self.button.grid(row=game_row, column=game_column, padx=3, pady=3)
+        self.button.grid(
+            row=game_row, 
+            column=game_column, 
+            padx=3, 
+            pady=3
+            )
 
     # Changes the label text of the selected buttons depending on current playing character 'x' or 'o'
     def button_func(self):
@@ -567,8 +708,11 @@ class button_class:
                         test = (set(x_list) ^ set(win_scenario)).pop()
                         if test in possible_moves:
                             win_list.remove(win_scenario)
-                            print(f"WIN LIST:{win_list}")
-                            self.record_list[test].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                            self.record_list[test].config(
+                                text="⭘", 
+                                state=tk.DISABLED, 
+                                style="Circles.TButton"
+                                )
                             o_list.append(test)
                             o_list.sort()
                             possible_moves.remove(test)
@@ -581,7 +725,11 @@ class button_class:
                                 a = random.randrange(1,9)
                                 for move in possible_moves:
                                     if a == move:
-                                        self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                                        self.record_list[a].config(
+                                            text="⭘", 
+                                            state=tk.DISABLED, 
+                                            style="Circles.TButton"
+                                            )
                                         o_list.append(a)
                                         o_list.sort()
                                         possible_moves.remove(move)
@@ -593,10 +741,13 @@ class button_class:
                         a = random.randrange(1,9)
                         for move in possible_moves:
                             if a == move:
-                                self.record_list[a].config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
+                                self.record_list[a].config(
+                                    text="⭘", 
+                                    state=tk.DISABLED, 
+                                    style="Circles.TButton"
+                                    )
                                 o_list.append(a)
                                 o_list.sort()
-                                print(move)
                                 possible_moves.remove(move)
                                 looking = False
                                 disable_count += 1
@@ -637,9 +788,17 @@ class button_class:
     # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
     def identification(self, game_frame):
         if self.game_type == "Yes_AI":
-            self.button = ttk.Button(game_frame, command=self.button_func_ai, style="Idle.TButton")
+            self.button = ttk.Button(
+                game_frame, 
+                command=self.button_func_ai, 
+                style="Idle.TButton"
+                )
         elif self.game_type == "No_AI":
-            self.button = ttk.Button(game_frame, command=self.button_func, style="Idle.TButton")
+            self.button = ttk.Button(
+                game_frame, 
+                command=self.button_func, 
+                style="Idle.TButton"
+                )
         self.grid_allocation()
         key_name = self.id
         value = self.button
