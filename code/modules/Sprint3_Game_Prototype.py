@@ -4,6 +4,7 @@ import random
 
 save_file_path = "score_board.txt"
 
+# Class listing all styles for other tkinter widgets to inherit
 class styling(ttk.Style):
     def __init__(self, parent):
         super().__init__(parent)
@@ -11,12 +12,12 @@ class styling(ttk.Style):
         self.theme_use("clam")
         #style2.map('Custom.TButton', background=[("active", "red")])
 
-        yippe = [-159, -10, -160, -2]
+        tile_padding_template = [-159, -10, -160, -2]
 
         self.configure('Crosses.TButton',
                         foreground='Black',
                         font=('Segoe UI Symbol', 50),
-                        padding=yippe,
+                        padding=tile_padding_template,
                         background="#F8CECC",
                         relief="flat")
         self.map("Crosses.TButton", background=[("disabled", "#F8CECC")])
@@ -24,7 +25,7 @@ class styling(ttk.Style):
         self.configure('XWin.TButton',
                         foreground='Black',
                         font=('Segoe UI Symbol', 50),
-                        padding=yippe,
+                        padding=tile_padding_template,
                         background="#D5E8D4",
                         relief="flat")
         self.map("XWin.TButton", background=[("disabled", "#D5E8D4")])
@@ -32,14 +33,14 @@ class styling(ttk.Style):
         self.configure('Circles.TButton',
                         foreground='Black',
                         font=('Segoe UI Symbol', 50),
-                        padding=yippe,
+                        padding=tile_padding_template,
                         relief="flat")
         self.map("Circles.TButton", background=[("disabled", "#DAE8FC")])
 
         self.configure('OWin.TButton',
                         foreground='Black',
                         font=('Segoe UI Symbol', 50),
-                        padding=yippe,
+                        padding=tile_padding_template,
                         background="#D5E8D4",
                         relief="flat")
         self.map("OWin.TButton", background=[("disabled", "#D5E8D4")])
@@ -48,7 +49,7 @@ class styling(ttk.Style):
                         foreground='Black',
                         background="#f8f5f9",
                         font=('Segoe UI Symbol', 50),
-                        padding=yippe,
+                        padding=tile_padding_template,
                         relief="flat")
 
         self.configure("Restart.TButton",
@@ -161,6 +162,9 @@ class main_menu(tk.Tk):
         self.geometry("545x395")
         self.resizable(False, False)
 
+        # Initialises Tkinter Styles
+        style = styling(self)
+
         main_frame = tk.Frame(
             self,
             background=("#E1D5E7"),
@@ -217,12 +221,15 @@ class main_menu(tk.Tk):
             )
         tutorial_button.grid(row=2, column=1, sticky="sew", padx=2, pady=2)
 
+# Class that inherits all tk.Toplevel properties
 class playable_game(tk.Toplevel):
     def __init__(self, parent, game_type):
+        # Inherits properties of parent which is tkinter
         super().__init__(parent)
         self.parent = parent
         self.game_type = game_type
 
+        # Window properties
         self.parent.withdraw()
         self.title("Game")
         self.geometry("290x400")
@@ -244,7 +251,7 @@ class playable_game(tk.Toplevel):
         self.main_frame = tk.Frame(self, background="#E1D5E7", pady=10)
         self.main_frame.pack()
 
-        # Need .get() for score to get the value rather than the label widget data itself
+        # Defined widgets to be placed on the tkinter window
         self.cross_score_board = ttk.Label(
             self.main_frame, 
             textvariable=self.cross_combined, 
@@ -277,8 +284,7 @@ class playable_game(tk.Toplevel):
             )
         self.game_frame.grid(row=1, column=0, columnspan=3, padx=5, pady=10)
 
-        self.button_grid(self.game_frame, self)
-
+        # Button that allows the player to restart game scores
         self.restart_button = ttk.Button(
             self.main_frame, 
             text="Restart", 
@@ -287,23 +293,27 @@ class playable_game(tk.Toplevel):
             )
         self.restart_button.grid(row=2, column=0, columnspan=2)
 
+        # Button taht allows the player to return to main menu
         self.back_button = ttk.Button(
             self.main_frame, 
             text="Back", 
             style="Back.TButton", 
-            command=self.game_exit
+            command=lambda:self.exit("playable_game_button")
             )
         self.back_button.grid(row=2, column=1, columnspan=2)
 
+        # Creates the 9x9 grid of buttons
+        self.button_grid(self.game_frame, self)
+        
+        # Updates score to match variables
         self.score_update()
+
+        # Resets all game property variables
         game_set()
 
-    def exit(self):
-        self.parent.deiconify()
-        self.destroy()
-
-    def game_exit(self):
-        if self.game_type == "Yes_AI":
+    # Reopen parent widget and delete self
+    def exit(self, id):
+        if id == "playable_game_button" and self.game_type == "Yes_AI":
             score_confirmation(
                 self, 
                 self.parent, 
@@ -314,7 +324,7 @@ class playable_game(tk.Toplevel):
         else:
             self.parent.deiconify()
         self.destroy()
-    
+
     # Updates score with the string and integer tkinter variables (Label: Score) with auto updating properties
     def score_update(self):
         self.cross_combined.set(
@@ -366,10 +376,15 @@ class playable_game(tk.Toplevel):
     def button_grid(self, game_frame, parent):
         global record_list
         record_list = {}
-        for id in range(1, 10):
-            button = button_class(id, record_list, parent, self.game_type)
-            button.identification(self.game_frame)
+        id = 0
 
+        for row in range(3):
+            for column in range(3):
+                id += 1
+                button = button_class(id, row, column, record_list, parent, self.game_type)
+                button.identification(self.game_frame)
+
+# Score popup prompting user to give a input of 3 letters for their score
 class score_confirmation(tk.Toplevel):
     def __init__(self, parent, grandparent, cross, tie, circle):
             super().__init__(grandparent)
@@ -475,6 +490,7 @@ class score_confirmation(tk.Toplevel):
             self.grandparent.deiconify()
             self.destroy()
 
+# Brief tutorial page
 class tutorial_page(tk.Toplevel):
     def __init__(self, parent):
             super().__init__(parent)
@@ -529,9 +545,26 @@ class tutorial_page(tk.Toplevel):
                 )
             self.back_button.grid(row=1, padx=10, pady=10)
 
+# Scoreboard that reads local txt file for scores
 class scoreboard_page(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
+
+        player_dir = []
+        line_max = 0
+        placings = [
+            "#1st",
+            "#2nd",
+            "#3rd",
+            "#4th",
+            "#5th",
+            "#6th",
+            "#7th",
+            "#8th",
+            "#9th",
+            "#10th"
+        ]
+
         self.parent = parent
 
         self.parent.withdraw()
@@ -576,21 +609,6 @@ class scoreboard_page(tk.Toplevel):
         self.score_display.column("Name", minwidth=80, width=80, anchor="w")
         self.score_display.column("Score", minwidth=210, width=210, anchor="w")
 
-        player_dir = []
-        line_max = 0
-        placings = [
-            "#1st",
-            "#2nd",
-            "#3rd",
-            "#4th",
-            "#5th",
-            "#6th",
-            "#7th",
-            "#8th",
-            "#9th",
-            "#10th"
-        ]
-
         with open(save_file_path, "r") as file:
             for line in file.readlines():
                 # Automatically assigns values to the vars in list
@@ -616,170 +634,126 @@ class scoreboard_page(tk.Toplevel):
 # The necessary blueprint to create a 3x3 grid with button widgets
 class button_class:
     # States id var as self property on initiate class (class startup)
-    def __init__(self, id, record_list, parent, game_type):
+    def __init__(self, id, row, column, record_list, parent, game_type):
         self.id = id
+        self.row = row
+        self.column = column
         self.record_list = record_list
         self.parent = parent
         self.game_type = game_type
 
     # Allocates each button to create the 3x3 grid in game_frame widget
     def grid_allocation(self):
-        game_row = 0
-        game_column = 0
-
-        if self.id <= 3:
-            game_row = 0
-        elif self.id <= 6:
-            game_row = 1
-        else:
-            game_row = 2
-
-        if self.id == 4:
-            game_column = 0
-        elif self.id == 5:
-            game_column = 1
-        elif self.id % 3 == 0:
-            game_column = 2
-        elif self.id % 2 == 0:
-            game_column = 1
-        else:
-            game_column = 0
-        
         self.button.grid(
-            row=game_row, 
-            column=game_column, 
+            row=self.row, 
+            column=self.column, 
             padx=3, 
             pady=3
             )
 
     # Changes the label text of the selected buttons depending on current playing character 'x' or 'o'
     def button_func(self):
-        global crosses
-        global disable_count
-        global x_list
-        global o_list
-
         self.parent.back_button.config(state=tk.DISABLED)
         self.parent.restart_button.config(state=tk.DISABLED)
 
-        if crosses == True:
+        if game_properties.crosses == True:
             self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
-            x_list.append(self.id)
-            x_list.sort()
-            crosses = False
-        elif crosses == False:
+            game_properties.x_list.append(self.id)
+            game_properties.x_list.sort()
+            game_properties.crosses = False
+        elif game_properties.crosses == False:
             self.button.config(text="⭘", state=tk.DISABLED, style="Circles.TButton")
-            o_list.append(self.id)
-            o_list.sort()
-            crosses = True
+            game_properties.o_list.append(self.id)
+            game_properties.o_list.sort()
+            game_properties.crosses = True
 
-        disable_count += 1
+        game_properties.disable_count += 1
 
         self.win_cond()
 
         # Threshold for all buttons to be occupied till able to reset game
-        if disable_count == 9 and game_won == False:
+        if game_properties.disable_count == 9 and game_properties.game_won == False:
             self.parent.after(2000, lambda: self.parent.score_add("tie"))
 
     def button_func_ai(self):
-        global possible_moves
-        global disable_count
-        global x_list
-        global o_list
-        global game_won
-        global win_list
         looking = True
-        
         self.parent.back_button.config(state=tk.DISABLED)
         self.parent.restart_button.config(state=tk.DISABLED)
 
-        disable_count += 1
+        game_properties.disable_count += 1
 
+        # User turn record data
         self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
-        x_list.append(self.id)
-        x_list.sort()
-        possible_moves.remove(self.id)
+        game_properties.x_list.append(self.id)
+        game_properties.x_list.sort()
+        game_properties.possible_moves.remove(self.id)
         
         self.win_cond()
 
-        if possible_moves != [] and game_won == False:
-                for win_scenario in win_list:
-                    if len(set(x_list) & set(win_scenario)) >= 2:
-                        test = (set(x_list) ^ set(win_scenario)).pop()
-                        if test in possible_moves:
-                            win_list.remove(win_scenario)
+        # Ai process for PVE
+        if game_properties.possible_moves != [] and game_properties.game_won == False:
+                for win_scenario in game_properties.win_list:
+                    if len(set(game_properties.x_list) & set(win_scenario)) >= 2:
+                        test = (set(game_properties.x_list) ^ set(win_scenario)).pop()
+                        if test in game_properties.possible_moves:
+                            game_properties.win_list.remove(win_scenario)
                             self.record_list[test].config(
                                 text="⭘", 
                                 state=tk.DISABLED, 
                                 style="Circles.TButton"
                                 )
-                            o_list.append(test)
-                            o_list.sort()
-                            possible_moves.remove(test)
+                            game_properties.o_list.append(test)
+                            game_properties.o_list.sort()
+                            game_properties.possible_moves.remove(test)
                             looking = False
-                            disable_count += 1
+                            game_properties.disable_count += 1
                             self.win_cond()
                             break
                         else:
-                            while looking:
-                                a = random.randrange(1,9)
-                                for move in possible_moves:
-                                    if a == move:
-                                        self.record_list[a].config(
-                                            text="⭘", 
-                                            state=tk.DISABLED, 
-                                            style="Circles.TButton"
-                                            )
-                                        o_list.append(a)
-                                        o_list.sort()
-                                        possible_moves.remove(move)
-                                        looking = False
-                                        disable_count += 1
-                                        self.win_cond()
+                            self.ai_opponent(looking)
                 else:
-                    while looking:
-                        a = random.randrange(1,9)
-                        for move in possible_moves:
-                            if a == move:
-                                self.record_list[a].config(
-                                    text="⭘", 
-                                    state=tk.DISABLED, 
-                                    style="Circles.TButton"
-                                    )
-                                o_list.append(a)
-                                o_list.sort()
-                                possible_moves.remove(move)
-                                looking = False
-                                disable_count += 1
-                                self.win_cond()
+                    self.ai_opponent(looking)
 
         # Threshold for all buttons to be occupied till able to reset game
-        if disable_count == 9 and game_won == False:
+        if game_properties.disable_count == 9 and game_properties.game_won == False:
             self.parent.after(2000, lambda: self.parent.score_add("tie"))
+
+    # Inherits boolean for while loop checking process (check for moves)
+    def ai_opponent(self, looking):
+        while looking:
+            a = random.randrange(1,9)
+            for move in game_properties.possible_moves:
+                if a == move:
+                    self.record_list[a].config(
+                        text="⭘", 
+                        state=tk.DISABLED, 
+                        style="Circles.TButton"
+                        )
+                    game_properties.o_list.append(a)
+                    game_properties.o_list.sort()
+                    game_properties.possible_moves.remove(move)
+                    looking = False
+                    game_properties.disable_count += 1
+                    self.win_cond()
+                    return looking
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
-        global x_list
-        global o_list
-        global disable_count
-        global game_won
-        global win_list
-
         # Convert the following if statements dependent on button type to a function
         if self.button.winfo_exists():
-            for win_scenario in win_list:
-                if len(set(x_list).intersection(set(win_scenario))) == 3:
-                    game_won = True
-                    for button in set(x_list).intersection(set(win_scenario)):
+            for win_scenario in game_properties.win_list:
+                if len(set(game_properties.x_list).intersection(set(win_scenario))) == 3:
+                    game_properties.game_won = True
+                    for button in set(game_properties.x_list).intersection(set(win_scenario)):
                         self.record_list[button].config(style="XWin.TButton")
                         for button in self.record_list:
                             self.record_list[button].configure(state=tk.DISABLED)
                     self.parent.after(2000, lambda: self.parent.score_add("cross"))
 
-            for win_scenario in win_list:
-                if len(set(o_list).intersection(set(win_scenario))) == 3:
-                    game_won = True
-                    for button in set(o_list).intersection(set(win_scenario)):
+            for win_scenario in game_properties.win_list:
+                if len(set(game_properties.o_list).intersection(set(win_scenario))) == 3:
+                    game_properties.game_won = True
+                    for button in set(game_properties.o_list).intersection(set(win_scenario)):
                         self.record_list[button].config(style="OWin.TButton")
                         for button in self.record_list:
                             self.record_list[button].configure(state=tk.DISABLED)
@@ -805,16 +779,7 @@ class button_class:
         self.record_list[key_name] = value
 
 # Index of game recording components
-def game_set():
-    global crosses
-    global record_list
-    global x_list
-    global o_list
-    global disable_count
-    global activate_ai
-    global possible_moves
-    global game_won
-    global win_list
+class game_properties:
     win_list = [
             [1, 2, 3],
             [4, 5, 6],
@@ -828,11 +793,30 @@ def game_set():
     game_won = False
     disable_count = 0
     crosses = True
-    record_list = {}
     x_list = []
     o_list = []
-    activate_ai = False
     possible_moves = [1,2,3,4,5,6,7,8,9]
+    record_list = {}
+
+# Resets all game properties to default state
+def game_set():
+    game_properties.win_list = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 6, 9],
+            [1, 5, 9],
+            [3, 5, 7]
+        ]
+    game_properties.game_won = False
+    game_properties.disable_count = 0
+    game_properties.crosses = True
+    game_properties.x_list = []
+    game_properties.o_list = []
+    game_properties.possible_moves = [1,2,3,4,5,6,7,8,9]
+    game_properties.record_list = {}
 
 # Creates loop for tkinter interface
 if __name__ == "__main__":
