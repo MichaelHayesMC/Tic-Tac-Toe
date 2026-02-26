@@ -293,7 +293,7 @@ class playable_game(tk.Toplevel):
             )
         self.restart_button.grid(row=2, column=0, columnspan=2)
 
-        # Button taht allows the player to return to main menu
+        # Button that allows the player to return to main menu
         self.back_button = ttk.Button(
             self.main_frame, 
             text="Back", 
@@ -705,14 +705,44 @@ class button_class:
                             game_properties.o_list.append(test)
                             game_properties.o_list.sort()
                             game_properties.possible_moves.remove(test)
-                            looking = False
                             game_properties.disable_count += 1
                             self.win_cond()
+                            print("Combat")
                             break
                         else:
-                            self.ai_opponent(looking)
+                            while looking:
+                                a = random.randrange(1,9)
+                                for move in game_properties.possible_moves:
+                                    if a == move:
+                                        self.record_list[a].config(
+                                            text="⭘", 
+                                            state=tk.DISABLED, 
+                                            style="Circles.TButton"
+                                            )
+                                        game_properties.o_list.append(a)
+                                        game_properties.o_list.sort()
+                                        game_properties.possible_moves.remove(move)
+                                        game_properties.disable_count += 1
+                                        self.win_cond()
+                                        looking = False
+                                        print("Attempt Combat")
                 else:
-                    self.ai_opponent(looking)
+                    while looking:
+                        a = random.randrange(1,9)
+                        for move in game_properties.possible_moves:
+                            if a == move:
+                                self.record_list[a].config(
+                                    text="⭘", 
+                                    state=tk.DISABLED, 
+                                    style="Circles.TButton"
+                                    )
+                                game_properties.o_list.append(a)
+                                game_properties.o_list.sort()
+                                game_properties.possible_moves.remove(move)
+                                game_properties.disable_count += 1
+                                self.win_cond()
+                                looking = False
+                                print("Random")
 
         # Threshold for all buttons to be occupied till able to reset game
         if game_properties.disable_count == 9 and game_properties.game_won == False:
