@@ -383,6 +383,7 @@ class playable_game(tk.Toplevel):
                 id += 1
                 button = button_class(id, row, column, record_list, parent, self.game_type)
                 button.identification(self.game_frame)
+        print(record_list)
 
 # Score popup prompting user to give a input of 3 letters for their score
 class score_confirmation(tk.Toplevel):
@@ -707,13 +708,14 @@ class button_class:
                             game_properties.possible_moves.remove(test)
                             game_properties.disable_count += 1
                             self.win_cond()
-                            print("Combat")
+                            print("Combat", test)
                             break
                         else:
                             while looking:
                                 a = random.randrange(1,9)
                                 for move in game_properties.possible_moves:
                                     if a == move:
+                                        looking = False
                                         self.record_list[a].config(
                                             text="⭘", 
                                             state=tk.DISABLED, 
@@ -724,13 +726,14 @@ class button_class:
                                         game_properties.possible_moves.remove(move)
                                         game_properties.disable_count += 1
                                         self.win_cond()
-                                        looking = False
-                                        print("Attempt Combat")
+                                        print("Attempt Combat", a)
+                                        break
                 else:
                     while looking:
                         a = random.randrange(1,9)
                         for move in game_properties.possible_moves:
                             if a == move:
+                                looking = False
                                 self.record_list[a].config(
                                     text="⭘", 
                                     state=tk.DISABLED, 
@@ -741,8 +744,10 @@ class button_class:
                                 game_properties.possible_moves.remove(move)
                                 game_properties.disable_count += 1
                                 self.win_cond()
-                                looking = False
-                                print("Random")
+                                print("Random", a)
+                                break
+        print(self.record_list)
+        print(game_properties.possible_moves)
 
         # Threshold for all buttons to be occupied till able to reset game
         if game_properties.disable_count == 9 and game_properties.game_won == False:
