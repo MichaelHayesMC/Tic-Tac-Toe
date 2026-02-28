@@ -640,6 +640,7 @@ class button_class:
         self.row = row
         self.column = column
         self.record_list = record_list
+        print(self.record_list)
         self.parent = parent
         self.game_type = game_type
 
