@@ -298,7 +298,7 @@ class playable_game(tk.Toplevel):
             self.main_frame, 
             text="Back", 
             style="Back.TButton", 
-            command=lambda:self.exit("playable_game_button")
+            command=lambda:self.exit(True)
             )
         self.back_button.grid(row=2, column=1, columnspan=2)
 
@@ -312,8 +312,8 @@ class playable_game(tk.Toplevel):
         self.score_update()
 
     # Reopen parent widget and delete self
-    def exit(self, id):
-        if id == "playable_game_button" and self.game_type == "Yes_AI":
+    def exit(self, game_playing):
+        if game_playing == True and self.game_type == "Yes_AI":
             score_confirmation(
                 self, 
                 self.parent, 
@@ -539,7 +539,7 @@ class tutorial_page(tk.Toplevel):
                 self.main_frame, 
                 text="Back", 
                 style="Back.TButton", 
-                command=lambda:playable_game.exit(self)
+                command=lambda:playable_game.exit(self, False)
                 )
             self.back_button.grid(row=1, padx=10, pady=10)
 
@@ -625,7 +625,7 @@ class scoreboard_page(tk.Toplevel):
             self.main_frame, 
             text="Back", 
             style="Back.TButton", 
-            command=lambda:playable_game.exit(self)
+            command=lambda:playable_game.exit(self, False)
             )
         self.back_button.grid(row=1, padx=10, pady=10)
 
@@ -669,8 +669,7 @@ class button_class:
 
     # Changes the label text of the selected buttons depending on current playing character 'x' or 'o'
     def button_func(self):
-        self.parent.back_button.config(state=tk.DISABLED)
-        self.parent.restart_button.config(state=tk.DISABLED)
+        self.button_initialise()
 
         if game_properties.crosses == True:
             self.button.config(text="✕", state=tk.DISABLED, style="Crosses.TButton")
@@ -692,10 +691,8 @@ class button_class:
             self.parent.after(2000, lambda: self.parent.score_add("tie"))
 
     def button_func_ai(self):
+        self.button_initialise()
         looking = True
-        self.parent.back_button.config(state=tk.DISABLED)
-        self.parent.restart_button.config(state=tk.DISABLED)
-
         game_properties.disable_count += 1
 
         # User turn record data
@@ -725,39 +722,11 @@ class button_class:
                             self.win_cond()
                             return
                         else:
-                            while looking:
-                                a = random.randrange(1,9)
-                                for move in game_properties.possible_moves:
-                                    if a == move:
-                                        looking = False
-                                        game_properties.record_list[a].config(
-                                            text="⭘", 
-                                            state=tk.DISABLED, 
-                                            style="Circles.TButton"
-                                            )
-                                        game_properties.o_list.append(a)
-                                        game_properties.o_list.sort()
-                                        game_properties.possible_moves.remove(move)
-                                        game_properties.disable_count += 1
-                                        self.win_cond()
-                                        return
+                            self.ai_opponent(looking)
+                            return
                 else:
-                    while looking:
-                        a = random.randrange(1,9)
-                        for move in game_properties.possible_moves:
-                            if a == move:
-                                looking = False
-                                game_properties.record_list[a].config(
-                                    text="⭘", 
-                                    state=tk.DISABLED, 
-                                    style="Circles.TButton"
-                                    )
-                                game_properties.o_list.append(a)
-                                game_properties.o_list.sort()
-                                game_properties.possible_moves.remove(move)
-                                game_properties.disable_count += 1
-                                self.win_cond()
-                                return
+                    self.ai_opponent(looking)
+                    return
 
         # Threshold for all buttons to be occupied till able to reset game
         if game_properties.disable_count == 9 and game_properties.game_won == False:
@@ -780,7 +749,7 @@ class button_class:
                     looking = False
                     game_properties.disable_count += 1
                     self.win_cond()
-                    return looking
+                    break
 
     # All possible win scenarios compared with current player input to find winner
     def win_cond(self):
@@ -803,6 +772,10 @@ class button_class:
                         for button in game_properties.record_list:
                             game_properties.record_list[button].configure(state=tk.DISABLED)
                     self.parent.after(2000, lambda: self.parent.score_add("circles"))
+
+    def button_initialise(self):
+        self.parent.back_button.config(state=tk.DISABLED)
+        self.parent.restart_button.config(state=tk.DISABLED)
 
 # Index of game recording components
 class game_properties:

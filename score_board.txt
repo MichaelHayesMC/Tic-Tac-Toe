@@ -4,3 +4,7 @@
 0 HEW
 1 BET
 7 STE
+2 GOD
+0 111
+0 HHH
+0 FFF
