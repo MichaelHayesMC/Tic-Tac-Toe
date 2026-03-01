@@ -302,14 +302,14 @@ class playable_game(tk.Toplevel):
             )
         self.back_button.grid(row=2, column=1, columnspan=2)
 
+        # Resets all game property variables
+        game_set()
+
         # Creates the 9x9 grid of buttons
         self.button_grid(self.game_frame, self)
         
         # Updates score to match variables
         self.score_update()
-
-        # Resets all game property variables
-        game_set()
 
     # Reopen parent widget and delete self
     def exit(self, id):
@@ -374,16 +374,14 @@ class playable_game(tk.Toplevel):
 
     # Creates 9 buttons for the 3x3 grid
     def button_grid(self, game_frame, parent):
-        global record_list
-        record_list = {}
         id = 0
 
         for row in range(3):
             for column in range(3):
                 id += 1
-                button = button_class(id, row, column, record_list, parent, self.game_type)
+                button = button_class(id, row, column, parent, self.game_type)
                 button.identification(self.game_frame)
-        print(record_list)
+        print(f"GP Recordlist{game_properties.record_list}")
 
 # Score popup prompting user to give a input of 3 letters for their score
 class score_confirmation(tk.Toplevel):
@@ -632,17 +630,34 @@ class scoreboard_page(tk.Toplevel):
             )
         self.back_button.grid(row=1, padx=10, pady=10)
 
-# The necessary blueprint to create a 3x3 grid with button widgets
+# The necessary blueprint to create each button in a 3x3 grid
 class button_class:
     # States id var as self property on initiate class (class startup)
-    def __init__(self, id, row, column, record_list, parent, game_type):
+    def __init__(self, id, row, column, parent, game_type):
         self.id = id
         self.row = row
         self.column = column
-        self.record_list = record_list
-        print(self.record_list)
         self.parent = parent
         self.game_type = game_type
+
+    # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
+    def identification(self, game_frame):
+        if self.game_type == "Yes_AI":
+            self.button = ttk.Button(
+                game_frame, 
+                command=self.button_func_ai, 
+                style="Idle.TButton"
+                )
+        elif self.game_type == "No_AI":
+            self.button = ttk.Button(
+                game_frame, 
+                command=self.button_func, 
+                style="Idle.TButton"
+                )
+        self.grid_allocation()
+        key_name = self.id
+        value = self.button
+        game_properties.record_list[key_name] = value
 
     # Allocates each button to create the 3x3 grid in game_frame widget
     def grid_allocation(self):
@@ -699,7 +714,7 @@ class button_class:
                         test = (set(game_properties.x_list) ^ set(win_scenario)).pop()
                         if test in game_properties.possible_moves:
                             game_properties.win_list.remove(win_scenario)
-                            self.record_list[test].config(
+                            game_properties.record_list[test].config(
                                 text="⭘", 
                                 state=tk.DISABLED, 
                                 style="Circles.TButton"
@@ -717,7 +732,7 @@ class button_class:
                                 for move in game_properties.possible_moves:
                                     if a == move:
                                         looking = False
-                                        self.record_list[a].config(
+                                        game_properties.record_list[a].config(
                                             text="⭘", 
                                             state=tk.DISABLED, 
                                             style="Circles.TButton"
@@ -735,7 +750,7 @@ class button_class:
                         for move in game_properties.possible_moves:
                             if a == move:
                                 looking = False
-                                self.record_list[a].config(
+                                game_properties.record_list[a].config(
                                     text="⭘", 
                                     state=tk.DISABLED, 
                                     style="Circles.TButton"
@@ -747,8 +762,8 @@ class button_class:
                                 self.win_cond()
                                 print("Random", a)
                                 break
-        print(self.record_list)
         print(game_properties.possible_moves)
+        print(game_properties.win_list)
 
         # Threshold for all buttons to be occupied till able to reset game
         if game_properties.disable_count == 9 and game_properties.game_won == False:
@@ -760,7 +775,7 @@ class button_class:
             a = random.randrange(1,9)
             for move in game_properties.possible_moves:
                 if a == move:
-                    self.record_list[a].config(
+                    game_properties.record_list[a].config(
                         text="⭘", 
                         state=tk.DISABLED, 
                         style="Circles.TButton"
@@ -781,38 +796,19 @@ class button_class:
                 if len(set(game_properties.x_list).intersection(set(win_scenario))) == 3:
                     game_properties.game_won = True
                     for button in set(game_properties.x_list).intersection(set(win_scenario)):
-                        self.record_list[button].config(style="XWin.TButton")
-                        for button in self.record_list:
-                            self.record_list[button].configure(state=tk.DISABLED)
+                        game_properties.record_list[button].config(style="XWin.TButton")
+                        for button in game_properties.record_list:
+                            game_properties.record_list[button].configure(state=tk.DISABLED)
                     self.parent.after(2000, lambda: self.parent.score_add("cross"))
 
             for win_scenario in game_properties.win_list:
                 if len(set(game_properties.o_list).intersection(set(win_scenario))) == 3:
                     game_properties.game_won = True
                     for button in set(game_properties.o_list).intersection(set(win_scenario)):
-                        self.record_list[button].config(style="OWin.TButton")
-                        for button in self.record_list:
-                            self.record_list[button].configure(state=tk.DISABLED)
+                        game_properties.record_list[button].config(style="OWin.TButton")
+                        for button in game_properties.record_list:
+                            game_properties.record_list[button].configure(state=tk.DISABLED)
                     self.parent.after(2000, lambda: self.parent.score_add("circles"))
-
-    # Assigns each button with a blank square then follows up to assign each in a 3x3 grid
-    def identification(self, game_frame):
-        if self.game_type == "Yes_AI":
-            self.button = ttk.Button(
-                game_frame, 
-                command=self.button_func_ai, 
-                style="Idle.TButton"
-                )
-        elif self.game_type == "No_AI":
-            self.button = ttk.Button(
-                game_frame, 
-                command=self.button_func, 
-                style="Idle.TButton"
-                )
-        self.grid_allocation()
-        key_name = self.id
-        value = self.button
-        self.record_list[key_name] = value
 
 # Index of game recording components
 class game_properties:
