@@ -381,7 +381,6 @@ class playable_game(tk.Toplevel):
                 id += 1
                 button = button_class(id, row, column, parent, self.game_type)
                 button.identification(self.game_frame)
-        print(f"GP Recordlist{game_properties.record_list}")
 
 # Score popup prompting user to give a input of 3 letters for their score
 class score_confirmation(tk.Toplevel):
@@ -724,8 +723,7 @@ class button_class:
                             game_properties.possible_moves.remove(test)
                             game_properties.disable_count += 1
                             self.win_cond()
-                            print("Combat", test)
-                            break
+                            return
                         else:
                             while looking:
                                 a = random.randrange(1,9)
@@ -742,8 +740,7 @@ class button_class:
                                         game_properties.possible_moves.remove(move)
                                         game_properties.disable_count += 1
                                         self.win_cond()
-                                        print("Attempt Combat", a)
-                                        break
+                                        return
                 else:
                     while looking:
                         a = random.randrange(1,9)
@@ -760,10 +757,7 @@ class button_class:
                                 game_properties.possible_moves.remove(move)
                                 game_properties.disable_count += 1
                                 self.win_cond()
-                                print("Random", a)
-                                break
-        print(game_properties.possible_moves)
-        print(game_properties.win_list)
+                                return
 
         # Threshold for all buttons to be occupied till able to reset game
         if game_properties.disable_count == 9 and game_properties.game_won == False:
